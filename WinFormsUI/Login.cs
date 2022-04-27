@@ -38,5 +38,11 @@ namespace WinFormsUI
 
         }
 
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Register register = new Register();
+            register.Show();
+            this.Hide();
+        }
     }
 }
