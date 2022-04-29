@@ -27,10 +27,7 @@ namespace DataAccess.Concrete.EntityFramework
                                      StudentId= sa.StudentId,
                                      QuestionId = q.Id,
                                      QuestionText=q.QuestionText,
-                                     PicturePath=q.PicturePath,
-                                     
                                      SigmaCount= sa.SigmaCount,
-                                     Validation=sa.Validation
                                  };
                     return result.FirstOrDefault();
                 }

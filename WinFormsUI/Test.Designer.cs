@@ -45,6 +45,8 @@ namespace WinFormsUI
             this.btn_A.TabIndex = 0;
             this.btn_A.Text = "A";
             this.btn_A.UseVisualStyleBackColor = true;
+            this.btn_A.Visible = false;
+            this.btn_A.Click += new System.EventHandler(this.btn_A_Click);
             // 
             // btn_B
             // 
@@ -54,6 +56,7 @@ namespace WinFormsUI
             this.btn_B.TabIndex = 1;
             this.btn_B.Text = "B";
             this.btn_B.UseVisualStyleBackColor = true;
+            this.btn_B.Visible = false;
             this.btn_B.Click += new System.EventHandler(this.btn_B_Click);
             // 
             // btn_C
@@ -65,6 +68,7 @@ namespace WinFormsUI
             this.btn_C.TabIndex = 2;
             this.btn_C.Text = "C";
             this.btn_C.UseVisualStyleBackColor = true;
+            this.btn_C.Visible = false;
             this.btn_C.Click += new System.EventHandler(this.btn_C_Click);
             // 
             // btn_D
@@ -75,16 +79,18 @@ namespace WinFormsUI
             this.btn_D.TabIndex = 3;
             this.btn_D.Text = "D";
             this.btn_D.UseVisualStyleBackColor = true;
+            this.btn_D.Visible = false;
             this.btn_D.Click += new System.EventHandler(this.btn_D_Click);
             // 
             // lbl_QuestionText
             // 
             this.lbl_QuestionText.AutoSize = true;
-            this.lbl_QuestionText.Location = new System.Drawing.Point(224, 84);
+            this.lbl_QuestionText.Location = new System.Drawing.Point(144, 90);
             this.lbl_QuestionText.Name = "lbl_QuestionText";
             this.lbl_QuestionText.Size = new System.Drawing.Size(50, 20);
             this.lbl_QuestionText.TabIndex = 4;
             this.lbl_QuestionText.Text = "label1";
+            this.lbl_QuestionText.Visible = false;
             // 
             // btn_AskQuestion
             // 
@@ -109,6 +115,7 @@ namespace WinFormsUI
             this.Controls.Add(this.btn_A);
             this.Name = "Test";
             this.Text = "Test";
+            this.Load += new System.EventHandler(this.Test_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

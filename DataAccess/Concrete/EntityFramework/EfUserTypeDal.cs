@@ -9,5 +9,6 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfUserTypeDal:EfEntityRepositoryBase<UserType,TestingApplicationContext>,IUserTypeDal
     {
+
     }
 }

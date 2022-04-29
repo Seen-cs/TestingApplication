@@ -34,7 +34,8 @@ namespace WinFormsUI
             this.lbl_UserName = new System.Windows.Forms.Label();
             this.lbl_Password = new System.Windows.Forms.Label();
             this.btn_Login = new System.Windows.Forms.Button();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.llbl_Register = new System.Windows.Forms.LinkLabel();
+            this.llbl_IForgetMyPassword = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // txt_UserName
@@ -71,7 +72,7 @@ namespace WinFormsUI
             // 
             // btn_Login
             // 
-            this.btn_Login.Location = new System.Drawing.Point(252, 168);
+            this.btn_Login.Location = new System.Drawing.Point(231, 155);
             this.btn_Login.Name = "btn_Login";
             this.btn_Login.Size = new System.Drawing.Size(94, 29);
             this.btn_Login.TabIndex = 4;
@@ -79,23 +80,35 @@ namespace WinFormsUI
             this.btn_Login.UseVisualStyleBackColor = true;
             this.btn_Login.Click += new System.EventHandler(this.btn_Login_Click);
             // 
-            // linkLabel1
+            // llbl_Register
             // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(264, 134);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(61, 20);
-            this.linkLabel1.TabIndex = 5;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "Kayıt Ol";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            this.llbl_Register.AutoSize = true;
+            this.llbl_Register.Location = new System.Drawing.Point(244, 205);
+            this.llbl_Register.Name = "llbl_Register";
+            this.llbl_Register.Size = new System.Drawing.Size(61, 20);
+            this.llbl_Register.TabIndex = 5;
+            this.llbl_Register.TabStop = true;
+            this.llbl_Register.Text = "Kayıt Ol";
+            this.llbl_Register.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llbl_Register_LinkClicked);
+            // 
+            // llbl_IForgetMyPassword
+            // 
+            this.llbl_IForgetMyPassword.AutoSize = true;
+            this.llbl_IForgetMyPassword.Location = new System.Drawing.Point(99, 205);
+            this.llbl_IForgetMyPassword.Name = "llbl_IForgetMyPassword";
+            this.llbl_IForgetMyPassword.Size = new System.Drawing.Size(115, 20);
+            this.llbl_IForgetMyPassword.TabIndex = 6;
+            this.llbl_IForgetMyPassword.TabStop = true;
+            this.llbl_IForgetMyPassword.Text = "Şifremi unuttum";
+            this.llbl_IForgetMyPassword.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llbl_IForgetMyPassword_LinkClicked);
             // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(475, 292);
-            this.Controls.Add(this.linkLabel1);
+            this.Controls.Add(this.llbl_IForgetMyPassword);
+            this.Controls.Add(this.llbl_Register);
             this.Controls.Add(this.btn_Login);
             this.Controls.Add(this.lbl_Password);
             this.Controls.Add(this.lbl_UserName);
@@ -114,6 +127,7 @@ namespace WinFormsUI
         private System.Windows.Forms.Button btn_Login;
         public System.Windows.Forms.TextBox txt_UserName;
         public System.Windows.Forms.TextBox txt_Password;
-        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.LinkLabel llbl_Register;
+        private System.Windows.Forms.LinkLabel llbl_IForgetMyPassword;
     }
 }

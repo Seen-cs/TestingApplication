@@ -38,10 +38,17 @@ namespace WinFormsUI
 
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void llbl_Register_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Register register = new Register();
             register.Show();
+            this.Hide();
+        }
+
+        private void llbl_IForgetMyPassword_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            IForgetMyPassword iforgetMyPassword = new IForgetMyPassword();
+            iforgetMyPassword.Show();
             this.Hide();
         }
     }

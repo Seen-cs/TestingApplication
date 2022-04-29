@@ -15,19 +15,31 @@ namespace WinFormsUI
     public partial class Test : Form
     {
 
+        public Test()
+        {
+            InitializeComponent();
+        }
+
         StudentAnswerManager studentsAnswersManager = new StudentAnswerManager(new EfStudentAnswerDal());
         QuestionManager questionManager = new QuestionManager(new EfQuestionDal());
         UserManager userManager = new UserManager(new EfUserDal());
-        Random random = new Random();
         List<int> randValue = new List<int>();
+        List<int> studentQuestionIdToBeFirstTimeAsked = new List<int>();
         List<int> studentQuestionId = new List<int>();
-        int NumberOfQuestionsToBeAsked = 1;
+        List<int> studentQuestionIdForSigma = new List<int>();
+        int NumberOfQuestionsToBeAsked = 3;
         int questionIndex = 0;
-        int questionNumberToBeAskedForTheFirstTime = 0;
         public string userName { get; set; }
         public string password { get; set; }
+        /*
+
+                soruların resimli olması seceneği eklenmeli
+
+        */
         public void btn_AskQuestion_Click(object sender, EventArgs e)
         {
+            btn_AskQuestion.Text = "Sonraki soru-->";
+            lbl_QuestionText.Visible = true;
             btn_A.Visible = true;
             btn_B.Visible = true;
             btn_C.Visible = true;
@@ -36,77 +48,90 @@ namespace WinFormsUI
             btn_B.Enabled = true;
             btn_C.Enabled = true;
             btn_D.Enabled = true;
-
             var studentId = userManager.GetUserWithUserNameAndPassword(userName, password).Data.Id;
-            var studentFirstLoginDate = userManager.GetUserWithUserNameAndPassword(userName, password).Data.FirstLoginDate;
-            //int studentQuestionsCount = studentsAnswersManager.GetAllStudentAnswerWithStudentId(studentId).Data.Count();
-            if (DateTime.Now.Day == studentFirstLoginDate.Day + 1 ||
-                DateTime.Now.Day == studentFirstLoginDate.Day + 7 ||
-                DateTime.Now.Day == studentFirstLoginDate.Day + 30 ||
-                DateTime.Now.Day == studentFirstLoginDate.Day + 90 ||
-                DateTime.Now.Day == studentFirstLoginDate.Day + 365)
-            {
-                foreach (var item in studentsAnswersManager.GetAllStudentAnswerWithStudentId(studentId).Data)
+
+            if (questionIndex>=0 && studentQuestionIdForSigma.Count()>questionIndex)
+            {                
+                var questionAskDate = studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, studentQuestionIdForSigma[questionIndex]).Data.QuestionAskDate;
+                // int studentQuestionsCount = studentsAnswersManager.GetAllStudentAnswerWithStudentId(studentId).Data.Count();
+                if (DateTime.Now.Day == questionAskDate.Day + 1 ||
+                    DateTime.Now.Day == questionAskDate.Day + 7 ||
+                    DateTime.Now.Day == questionAskDate.Day + 30 ||
+                    DateTime.Now.Day == questionAskDate.Day + 90 ||
+                    DateTime.Now.Day == questionAskDate.Day + 365)
                 {
-                    if (questionIndex == 0)
+                    foreach (var item in studentsAnswersManager.GetAllStudentAnswerWithStudentId(studentId).Data)
                     {
-                        studentQuestionId.Add(item.QuestionId);
+                        if (questionIndex == 0)
+                        {
+                            studentQuestionId.Add(item.QuestionId);
+                        }
+
+                    }
+                    if (questionIndex < studentQuestionId.Count() && questionIndex != -1)
+                    {
+                        lbl_QuestionText.Text = studentsAnswersManager.GetStudentQuestionWithStudentIdAndQuestionId(studentId, studentQuestionId[questionIndex]).Data.QuestionText;
+                        btn_A.Text = questionManager.GetQuestionsById(studentQuestionId[questionIndex]).Data.AnswerA;
+                        btn_B.Text = questionManager.GetQuestionsById(studentQuestionId[questionIndex]).Data.AnswerB;
+                        btn_C.Text = questionManager.GetQuestionsById(studentQuestionId[questionIndex]).Data.AnswerC;
+                        btn_D.Text = questionManager.GetQuestionsById(studentQuestionId[questionIndex]).Data.AnswerD;
+                        questionIndex++;
                     }
 
-                }
-                lbl_QuestionText.Text = studentsAnswersManager.GetStudentQuestionWithStudentIdAndQuestionId(studentId, studentQuestionId[questionIndex]).Data.QuestionText;
-                btn_A.Text = questionManager.GetQuestionsById(studentQuestionId[questionIndex]).Data.AnswerA;
-                btn_B.Text = questionManager.GetQuestionsById(studentQuestionId[questionIndex]).Data.AnswerB;
-                btn_C.Text = questionManager.GetQuestionsById(studentQuestionId[questionIndex]).Data.AnswerC;
-                btn_D.Text = questionManager.GetQuestionsById(studentQuestionId[questionIndex]).Data.AnswerD;
-                if (questionIndex < studentQuestionId.Count())
-                {
-                    questionIndex++;
-                }
+                    //if (questionIndex <= studentQuestionId.Count() && questionIndex != -1)
+                    //{
+                    //    questionIndex++;
+                    //}
 
+                }
             }
-
-
-            else
+            
+            if (questionIndex > studentQuestionId.Count()|| questionIndex == 0 || questionIndex==-1)
             {
                 //eger sayı gelmesse sonsuz döngü olur!!
-                studentQuestionId.Clear();
-                int questionID = random.Next(1, 10);
-                if (questionManager.GetAll().Data.Count() -
+                 //questionIndex = -1;
+                 studentQuestionIdToBeFirstTimeAsked.Clear();
+
+                //bu kodu kotrol et
+                //bu kod sorulacak soru sayısı tabloda yoksa olan kadarını sormaya yarar
+                if (studentsAnswersManager.GetAllStudentAnswerWithStudentId(studentId).Success == true)
+                {
+                    if (questionManager.GetAll().Data.Count() -
                 studentsAnswersManager.GetAllStudentAnswerWithStudentId(studentId).Data.Count()
                 < NumberOfQuestionsToBeAsked)
-                     NumberOfQuestionsToBeAsked = questionManager.GetAll().Data.Count() -
-                     studentsAnswersManager.GetAllStudentAnswerWithStudentId(studentId).Data.Count();
-                //bu kod sorulacak soru sayısı tabloda yoksa olan kadarını sormaya yarar
-                if (NumberOfQuestionsToBeAsked==0)
+                        NumberOfQuestionsToBeAsked = questionManager.GetAll().Data.Count() -
+                        studentsAnswersManager.GetAllStudentAnswerWithStudentId(studentId).Data.Count();
+                }
+
+
+                if (NumberOfQuestionsToBeAsked == 0)
                 {
                     MessageBox.Show("Sınav bitti");
                     this.Hide();
                 }
+                Random random = new Random();
+                int questionID = random.Next(1, 8);
+                
                 while (NumberOfQuestionsToBeAsked != 0)
                 {
                     if (studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, questionID).Success == false
                         && randValue.Contains(questionID) == false)//soru onceden sorulmamıssa
                     {
-
-                        studentQuestionId.Add(questionID);
-                        lbl_QuestionText.Text = studentsAnswersManager.GetStudentQuestionWithStudentIdAndQuestionId(studentId, studentQuestionId[questionID]).Data.QuestionText;
-                        btn_A.Text = questionManager.GetQuestionsById(studentQuestionId[questionID]).Data.AnswerA;
-                        btn_B.Text = questionManager.GetQuestionsById(studentQuestionId[questionID]).Data.AnswerB;
-                        btn_C.Text = questionManager.GetQuestionsById(studentQuestionId[questionID]).Data.AnswerC;
-                        btn_C.Text = questionManager.GetQuestionsById(studentQuestionId[questionID]).Data.AnswerD;
+                        randValue.Add(questionID);
+                        studentQuestionIdToBeFirstTimeAsked.Add(questionID);
+                        lbl_QuestionText.Text = questionManager.GetQuestionsById(questionID).Data.QuestionText;
+                        btn_A.Text = questionManager.GetQuestionsById(questionID).Data.AnswerA;
+                        btn_B.Text = questionManager.GetQuestionsById(questionID).Data.AnswerB;
+                        btn_C.Text = questionManager.GetQuestionsById(questionID).Data.AnswerC;
+                        btn_D.Text = questionManager.GetQuestionsById(questionID).Data.AnswerD;
                         NumberOfQuestionsToBeAsked--;
                         studentsAnswersManager.Add(new StudentAnswer
                         {
-                            QuestionId = studentQuestionId[questionID],
+                            QuestionId = questionID,
                             StudentId = studentId,
-                            Validation = false,
                             SigmaCount = 0
                         });
-                        //if (numberofquestionstobeasked == 0)
-                        //{
-                        //    break;
-                        //}
+                        break;
 
                     }
                     //cok onemli hata PATLIYOR!!!
@@ -116,15 +141,14 @@ namespace WinFormsUI
 
                     else
                     {
-                        randValue.Add(questionID);
-                        Random random = new Random();
-                        questionID = random.Next(2, 7);
+                        Random random1 = new Random();
+                        questionID = random1.Next(1, 8);
                     }
 
-                }   
+                }
+
 
             }
-
         }
         
         public void btn_A_Click(object sender, EventArgs e)
@@ -136,15 +160,14 @@ namespace WinFormsUI
             //------verilen cevabı tabloya atma
             var studentId = userManager.GetUserWithUserNameAndPassword(userName, password).Data.Id;
             StudentAnswer temp = null;
-
-            if (questionIndex + 1 < studentQuestionId.Count())//sigmadan geldiyse
+            if (questionIndex > 0)//sigmadan geldiyse
             {
-                temp = studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, studentQuestionId[questionIndex]).Data;
+                temp = studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, studentQuestionId[questionIndex-1]).Data;
                 if (questionManager.GetQuestionsById(studentQuestionId[questionIndex - 1]).Data.AnswerA ==
                     questionManager.GetQuestionsById(studentQuestionId[questionIndex - 1]).Data.CorrectAnswer)//cevap dogruysa
                 {
-                    temp.Validation = true;
                     temp.SigmaCount++;
+                    studentsAnswersManager.Update(temp);
                     if (temp.SigmaCount == 6)
                     {
                         MessageBox.Show("sigma tamamlandı");
@@ -153,22 +176,24 @@ namespace WinFormsUI
                 }
                 else
                 {
-                    temp.Validation = false;
-                    temp.SigmaCount = 0;
+                    studentsAnswersManager.Delete(temp);
+                }
+                if (studentQuestionId.Count == questionIndex)
+                {
+                    questionIndex = -1;
                 }
 
 
             }
             else //soru ilk defa soruluyorsa
             {
-                temp = studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, studentQuestionId[questionNumberToBeAskedForTheFirstTime]).Data;
-
-                questionNumberToBeAskedForTheFirstTime++;
-                if (questionManager.GetQuestionsById(studentQuestionId[questionNumberToBeAskedForTheFirstTime]).Data.AnswerA ==
-                    questionManager.GetQuestionsById(studentQuestionId[questionNumberToBeAskedForTheFirstTime]).Data.CorrectAnswer)//cevap dogruysa
+                temp = studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, studentQuestionIdToBeFirstTimeAsked[0]).Data;
+                if (questionManager.GetQuestionsById(studentQuestionIdToBeFirstTimeAsked[0]).Data.AnswerA ==
+                    questionManager.GetQuestionsById(studentQuestionIdToBeFirstTimeAsked[0]).Data.CorrectAnswer)//cevap dogruysa
                 {
-                    temp.Validation = true;
                     temp.SigmaCount++;
+                    temp.QuestionAskDate = DateTime.Now;
+                    studentsAnswersManager.Update(temp);
                     if (temp.SigmaCount == 6)
                     {
                         MessageBox.Show("sigma tamamlandı");
@@ -178,11 +203,10 @@ namespace WinFormsUI
                 }
                 else
                 {
-                    temp.Validation = false;
-                    temp.SigmaCount = 0;
+                    studentsAnswersManager.Delete(temp);
                 }
             }
-            studentsAnswersManager.Update(temp);
+            
 
 
         }
@@ -196,15 +220,15 @@ namespace WinFormsUI
             //------verilen cevabı tabloya atma
             var studentId = userManager.GetUserWithUserNameAndPassword(userName, password).Data.Id;
             StudentAnswer temp = null;
-
-            if (questionIndex + 1 < studentQuestionId.Count())//sigmadan geldiyse
+            if (questionIndex > 0)//sigmadan geldiyse
             {
-                temp = studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, studentQuestionId[questionIndex]).Data;
+                
+                temp = studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, studentQuestionId[questionIndex - 1]).Data;
                 if (questionManager.GetQuestionsById(studentQuestionId[questionIndex - 1]).Data.AnswerB ==
                     questionManager.GetQuestionsById(studentQuestionId[questionIndex - 1]).Data.CorrectAnswer)//cevap dogruysa
                 {
-                    temp.Validation = true;
                     temp.SigmaCount++;
+                    studentsAnswersManager.Update(temp);
                     if (temp.SigmaCount == 6)
                     {
                         MessageBox.Show("sigma tamamlandı");
@@ -213,22 +237,24 @@ namespace WinFormsUI
                 }
                 else
                 {
-                    temp.Validation = false;
-                    temp.SigmaCount = 0;
+                    studentsAnswersManager.Delete(temp);
+                }
+                if (studentQuestionId.Count == questionIndex)
+                {
+                    questionIndex = -1;
                 }
 
 
             }
             else //soru ilk defa soruluyorsa
             {
-                temp = studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, studentQuestionId[questionNumberToBeAskedForTheFirstTime]).Data;
-
-                questionNumberToBeAskedForTheFirstTime++;
-                if (questionManager.GetQuestionsById(studentQuestionId[questionNumberToBeAskedForTheFirstTime]).Data.AnswerB ==
-                    questionManager.GetQuestionsById(studentQuestionId[questionNumberToBeAskedForTheFirstTime]).Data.CorrectAnswer)//cevap dogruysa
+                temp = studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, studentQuestionIdToBeFirstTimeAsked[0]).Data;
+                if (questionManager.GetQuestionsById(studentQuestionIdToBeFirstTimeAsked[0]).Data.AnswerB ==
+                    questionManager.GetQuestionsById(studentQuestionIdToBeFirstTimeAsked[0]).Data.CorrectAnswer)//cevap dogruysa
                 {
-                    temp.Validation = true;
                     temp.SigmaCount++;
+                    temp.QuestionAskDate = DateTime.Now;
+                    studentsAnswersManager.Update(temp);
                     if (temp.SigmaCount == 6)
                     {
                         MessageBox.Show("sigma tamamlandı");
@@ -238,11 +264,9 @@ namespace WinFormsUI
                 }
                 else
                 {
-                    temp.Validation = false;
-                    temp.SigmaCount = 0;
+                    studentsAnswersManager.Delete(temp);
                 }
             }
-            studentsAnswersManager.Update(temp);
         }
 
         private void btn_C_Click(object sender, EventArgs e)
@@ -254,15 +278,14 @@ namespace WinFormsUI
             //------verilen cevabı tabloya atma
             var studentId = userManager.GetUserWithUserNameAndPassword(userName, password).Data.Id;
             StudentAnswer temp = null;
-
-            if (questionIndex + 1 < studentQuestionId.Count())//sigmadan geldiyse
+            if (questionIndex > 0)//sigmadan geldiyse
             {
-                temp = studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, studentQuestionId[questionIndex]).Data;
+                temp = studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, studentQuestionId[questionIndex - 1]).Data;
                 if (questionManager.GetQuestionsById(studentQuestionId[questionIndex - 1]).Data.AnswerC ==
                     questionManager.GetQuestionsById(studentQuestionId[questionIndex - 1]).Data.CorrectAnswer)//cevap dogruysa
                 {
-                    temp.Validation = true;
                     temp.SigmaCount++;
+                    studentsAnswersManager.Update(temp);
                     if (temp.SigmaCount == 6)
                     {
                         MessageBox.Show("sigma tamamlandı");
@@ -271,22 +294,24 @@ namespace WinFormsUI
                 }
                 else
                 {
-                    temp.Validation = false;
-                    temp.SigmaCount = 0;
+                    studentsAnswersManager.Delete(temp);
+                }
+                if (studentQuestionId.Count == questionIndex)
+                {
+                    questionIndex = -1;
                 }
 
 
             }
             else //soru ilk defa soruluyorsa
             {
-                temp = studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, studentQuestionId[questionNumberToBeAskedForTheFirstTime]).Data;
-
-                questionNumberToBeAskedForTheFirstTime++;
-                if (questionManager.GetQuestionsById(studentQuestionId[questionNumberToBeAskedForTheFirstTime]).Data.AnswerC ==
-                    questionManager.GetQuestionsById(studentQuestionId[questionNumberToBeAskedForTheFirstTime]).Data.CorrectAnswer)//cevap dogruysa
+                temp = studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, studentQuestionIdToBeFirstTimeAsked[0]).Data;
+                if (questionManager.GetQuestionsById(studentQuestionIdToBeFirstTimeAsked[0]).Data.AnswerC ==
+                    questionManager.GetQuestionsById(studentQuestionIdToBeFirstTimeAsked[0]).Data.CorrectAnswer)//cevap dogruysa
                 {
-                    temp.Validation = true;
                     temp.SigmaCount++;
+                    temp.QuestionAskDate = DateTime.Now;
+                    studentsAnswersManager.Update(temp);
                     if (temp.SigmaCount == 6)
                     {
                         MessageBox.Show("sigma tamamlandı");
@@ -296,11 +321,9 @@ namespace WinFormsUI
                 }
                 else
                 {
-                    temp.Validation = false;
-                    temp.SigmaCount = 0;
+                    studentsAnswersManager.Delete(temp);
                 }
             }
-            studentsAnswersManager.Update(temp);
         }
 
         private void btn_D_Click(object sender, EventArgs e)
@@ -312,15 +335,14 @@ namespace WinFormsUI
             //------verilen cevabı tabloya atma
             var studentId = userManager.GetUserWithUserNameAndPassword(userName, password).Data.Id;
             StudentAnswer temp = null;
-
-            if (questionIndex + 1 < studentQuestionId.Count())//sigmadan geldiyse
+            if (questionIndex > 0)//sigmadan geldiyse
             {
-                temp = studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, studentQuestionId[questionIndex]).Data;
+                temp = studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, studentQuestionId[questionIndex - 1]).Data;
                 if (questionManager.GetQuestionsById(studentQuestionId[questionIndex - 1]).Data.AnswerD ==
                     questionManager.GetQuestionsById(studentQuestionId[questionIndex - 1]).Data.CorrectAnswer)//cevap dogruysa
                 {
-                    temp.Validation = true;
                     temp.SigmaCount++;
+                    studentsAnswersManager.Update(temp);
                     if (temp.SigmaCount == 6)
                     {
                         MessageBox.Show("sigma tamamlandı");
@@ -329,22 +351,24 @@ namespace WinFormsUI
                 }
                 else
                 {
-                    temp.Validation = false;
-                    temp.SigmaCount = 0;
+                    studentsAnswersManager.Delete(temp);
+                }
+                if (studentQuestionId.Count == questionIndex)
+                {
+                    questionIndex = -1;
                 }
 
 
             }
             else //soru ilk defa soruluyorsa
             {
-                temp = studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, studentQuestionId[questionNumberToBeAskedForTheFirstTime]).Data;
-
-                questionNumberToBeAskedForTheFirstTime++;
-                if (questionManager.GetQuestionsById(studentQuestionId[questionNumberToBeAskedForTheFirstTime]).Data.AnswerD ==
-                    questionManager.GetQuestionsById(studentQuestionId[questionNumberToBeAskedForTheFirstTime]).Data.CorrectAnswer)//cevap dogruysa
+                temp = studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, studentQuestionIdToBeFirstTimeAsked[0]).Data;
+                if (questionManager.GetQuestionsById(studentQuestionIdToBeFirstTimeAsked[0]).Data.AnswerD ==
+                    questionManager.GetQuestionsById(studentQuestionIdToBeFirstTimeAsked[0]).Data.CorrectAnswer)//cevap dogruysa
                 {
-                    temp.Validation = true;
                     temp.SigmaCount++;
+                    temp.QuestionAskDate = DateTime.Now;
+                    studentsAnswersManager.Update(temp);
                     if (temp.SigmaCount == 6)
                     {
                         MessageBox.Show("sigma tamamlandı");
@@ -354,11 +378,24 @@ namespace WinFormsUI
                 }
                 else
                 {
-                    temp.Validation = false;
-                    temp.SigmaCount = 0;
+                    studentsAnswersManager.Delete(temp);
                 }
             }
-            studentsAnswersManager.Update(temp);
+        }
+
+        private void Test_Load(object sender, EventArgs e)
+        {
+            var studentId = userManager.GetUserWithUserNameAndPassword(userName, password).Data.Id;
+            if (studentsAnswersManager.GetAllStudentAnswerWithStudentId(studentId).Success==true)
+            {
+                foreach (var item in studentsAnswersManager.GetAllStudentAnswerWithStudentId(studentId).Data)
+                {
+                    studentQuestionIdForSigma.Add(item.QuestionId);
+
+                }
+
+            }
+            
         }
     }
 }

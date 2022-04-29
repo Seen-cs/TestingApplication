@@ -1,6 +1,7 @@
 ﻿using Businiess.Abstract;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using DataAccess.DTOs;
 using Entity.Concrete;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,20 @@ namespace Businiess.Concrete
                 return new ErrorDataResult<List<User>>();
             }
             return new SuccessDataResult<List<User>>(_userDal.GetAll());
+        }
+
+        public IDataResult<List<UserTypeDto>> GetAllUserWithUserType(int userTypeId)
+        {
+            return new SuccessDataResult<List<UserTypeDto>>(_userDal.GetAllUserWithUserType(userTypeId));
+        }
+
+        public IDataResult<User> GetUserWithUserNameAndEmail(string userName, string email)
+        {
+            if (_userDal.Get(u => u.UserName == userName && u.Mail == email) == null)
+            {
+                return new ErrorDataResult<User>();
+            }
+            return new SuccessDataResult<User>(_userDal.Get(u => u.UserName == userName && u.Mail == email));
         }
 
         public IDataResult<User> GetUserWithUserNameAndPassword(string userName, string Password)

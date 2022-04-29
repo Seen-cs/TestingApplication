@@ -10,8 +10,8 @@ namespace Entity.Concrete
         public int Id { get; set; }
         public int QuestionId { get; set; }
         public int StudentId { get; set; }
-        public bool Validation { get; set; }
         public int SigmaCount { get; set; }
+        public DateTime QuestionAskDate { get; set; }
 
     }
 }

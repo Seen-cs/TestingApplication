@@ -31,6 +31,10 @@ namespace Businiess.Concrete
 
         public IDataResult<List<StudentAnswer>> GetAllStudentAnswerWithStudentId(int studentId)
         {
+            if (_studentAnswerDal.GetAll(i => i.StudentId == studentId)==null)
+            {
+                return new ErrorDataResult<List<StudentAnswer>>();
+            }
             return new SuccessDataResult<List<StudentAnswer>>(_studentAnswerDal.GetAll(i => i.StudentId == studentId));
         }
 
@@ -38,6 +42,7 @@ namespace Businiess.Concrete
         {
             return new SuccessDataResult<List<StudentAnswer>>(_studentAnswerDal.GetAll(i => i.StudentId==studentId && i.QuestionId==QuestionId));
         }
+
 
         public IDataResult<StudentAnswer> GetStudentAnswerWithStudentIdAndQuestionId(int studentId, int QuestionId)
         {
