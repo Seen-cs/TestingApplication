@@ -27,8 +27,11 @@ namespace WinFormsUI
         List<int> studentQuestionIdToBeFirstTimeAsked = new List<int>();
         List<int> studentQuestionId = new List<int>();
         List<int> studentQuestionIdForSigma = new List<int>();
-        int NumberOfQuestionsToBeAsked = 3;
+        int numberOfQuestionsToBeAsked = 3;
         int questionIndex = 0;
+        int timer = 0;
+        int second = 60;
+        int minute = 0;
         public string userName { get; set; }
         public string password { get; set; }
         /*
@@ -48,6 +51,14 @@ namespace WinFormsUI
             btn_B.Enabled = true;
             btn_C.Enabled = true;
             btn_D.Enabled = true;
+            lbl_Minute.Visible = true;
+            lbl_Second.Visible = true;
+            label1.Visible = true;
+            label3.Visible = true;
+            btn_A.BackColor = Color.White;
+            btn_B.BackColor = Color.White;
+            btn_C.BackColor = Color.White;
+            btn_D.BackColor = Color.White;
             var studentId = userManager.GetUserWithUserNameAndPassword(userName, password).Data.Id;
 
             if (questionIndex>=0 && studentQuestionIdForSigma.Count()>questionIndex)
@@ -85,7 +96,24 @@ namespace WinFormsUI
 
                 }
             }
-            
+
+
+
+
+            if (timer == 0)
+            {
+                timer1.Start();
+                if ((questionManager.GetAll().Data.Count-studentQuestionIdForSigma.Count)>10)
+                {
+                    minute = studentQuestionId.Count() + 10;
+                }
+                else
+                {
+                    minute = (questionManager.GetAll().Data.Count - studentQuestionIdForSigma.Count) + studentQuestionId.Count;
+                }
+                
+            }
+            timer++;
             if (questionIndex > studentQuestionId.Count()|| questionIndex == 0 || questionIndex==-1)
             {
                 //eger sayı gelmesse sonsuz döngü olur!!
@@ -98,13 +126,13 @@ namespace WinFormsUI
                 {
                     if (questionManager.GetAll().Data.Count() -
                 studentsAnswersManager.GetAllStudentAnswerWithStudentId(studentId).Data.Count()
-                < NumberOfQuestionsToBeAsked)
-                        NumberOfQuestionsToBeAsked = questionManager.GetAll().Data.Count() -
+                < numberOfQuestionsToBeAsked)
+                        numberOfQuestionsToBeAsked = questionManager.GetAll().Data.Count() -
                         studentsAnswersManager.GetAllStudentAnswerWithStudentId(studentId).Data.Count();
                 }
 
 
-                if (NumberOfQuestionsToBeAsked == 0)
+                if (numberOfQuestionsToBeAsked == 0)
                 {
                     MessageBox.Show("Sınav bitti");
                     this.Hide();
@@ -112,7 +140,7 @@ namespace WinFormsUI
                 Random random = new Random();
                 int questionID = random.Next(1, 8);
                 
-                while (NumberOfQuestionsToBeAsked != 0)
+                while (numberOfQuestionsToBeAsked != 0)
                 {
                     if (studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, questionID).Success == false
                         && randValue.Contains(questionID) == false)//soru onceden sorulmamıssa
@@ -124,7 +152,7 @@ namespace WinFormsUI
                         btn_B.Text = questionManager.GetQuestionsById(questionID).Data.AnswerB;
                         btn_C.Text = questionManager.GetQuestionsById(questionID).Data.AnswerC;
                         btn_D.Text = questionManager.GetQuestionsById(questionID).Data.AnswerD;
-                        NumberOfQuestionsToBeAsked--;
+                        numberOfQuestionsToBeAsked--;
                         studentsAnswersManager.Add(new StudentAnswer
                         {
                             QuestionId = questionID,
@@ -166,6 +194,8 @@ namespace WinFormsUI
                 if (questionManager.GetQuestionsById(studentQuestionId[questionIndex - 1]).Data.AnswerA ==
                     questionManager.GetQuestionsById(studentQuestionId[questionIndex - 1]).Data.CorrectAnswer)//cevap dogruysa
                 {
+                    btn_A.BackColor = Color.Green;
+                   
                     temp.SigmaCount++;
                     studentsAnswersManager.Update(temp);
                     if (temp.SigmaCount == 6)
@@ -176,6 +206,7 @@ namespace WinFormsUI
                 }
                 else
                 {
+                    btn_A.BackColor = Color.Red;
                     studentsAnswersManager.Delete(temp);
                 }
                 if (studentQuestionId.Count == questionIndex)
@@ -191,6 +222,7 @@ namespace WinFormsUI
                 if (questionManager.GetQuestionsById(studentQuestionIdToBeFirstTimeAsked[0]).Data.AnswerA ==
                     questionManager.GetQuestionsById(studentQuestionIdToBeFirstTimeAsked[0]).Data.CorrectAnswer)//cevap dogruysa
                 {
+                    btn_A.BackColor = Color.Green;
                     temp.SigmaCount++;
                     temp.QuestionAskDate = DateTime.Now;
                     studentsAnswersManager.Update(temp);
@@ -203,6 +235,7 @@ namespace WinFormsUI
                 }
                 else
                 {
+                    btn_A.BackColor = Color.Red;
                     studentsAnswersManager.Delete(temp);
                 }
             }
@@ -227,6 +260,8 @@ namespace WinFormsUI
                 if (questionManager.GetQuestionsById(studentQuestionId[questionIndex - 1]).Data.AnswerB ==
                     questionManager.GetQuestionsById(studentQuestionId[questionIndex - 1]).Data.CorrectAnswer)//cevap dogruysa
                 {
+                    btn_B.BackColor = Color.Green;
+
                     temp.SigmaCount++;
                     studentsAnswersManager.Update(temp);
                     if (temp.SigmaCount == 6)
@@ -237,6 +272,8 @@ namespace WinFormsUI
                 }
                 else
                 {
+                    btn_B.BackColor = Color.Red;
+
                     studentsAnswersManager.Delete(temp);
                 }
                 if (studentQuestionId.Count == questionIndex)
@@ -252,6 +289,8 @@ namespace WinFormsUI
                 if (questionManager.GetQuestionsById(studentQuestionIdToBeFirstTimeAsked[0]).Data.AnswerB ==
                     questionManager.GetQuestionsById(studentQuestionIdToBeFirstTimeAsked[0]).Data.CorrectAnswer)//cevap dogruysa
                 {
+                    btn_B.BackColor = Color.Green;
+
                     temp.SigmaCount++;
                     temp.QuestionAskDate = DateTime.Now;
                     studentsAnswersManager.Update(temp);
@@ -264,6 +303,7 @@ namespace WinFormsUI
                 }
                 else
                 {
+                    btn_B.BackColor = Color.Red;
                     studentsAnswersManager.Delete(temp);
                 }
             }
@@ -284,6 +324,8 @@ namespace WinFormsUI
                 if (questionManager.GetQuestionsById(studentQuestionId[questionIndex - 1]).Data.AnswerC ==
                     questionManager.GetQuestionsById(studentQuestionId[questionIndex - 1]).Data.CorrectAnswer)//cevap dogruysa
                 {
+                    btn_C.BackColor = Color.Green;
+
                     temp.SigmaCount++;
                     studentsAnswersManager.Update(temp);
                     if (temp.SigmaCount == 6)
@@ -294,6 +336,8 @@ namespace WinFormsUI
                 }
                 else
                 {
+                    btn_C.BackColor = Color.Red;
+
                     studentsAnswersManager.Delete(temp);
                 }
                 if (studentQuestionId.Count == questionIndex)
@@ -309,6 +353,8 @@ namespace WinFormsUI
                 if (questionManager.GetQuestionsById(studentQuestionIdToBeFirstTimeAsked[0]).Data.AnswerC ==
                     questionManager.GetQuestionsById(studentQuestionIdToBeFirstTimeAsked[0]).Data.CorrectAnswer)//cevap dogruysa
                 {
+                    btn_C.BackColor = Color.Green;
+
                     temp.SigmaCount++;
                     temp.QuestionAskDate = DateTime.Now;
                     studentsAnswersManager.Update(temp);
@@ -321,6 +367,8 @@ namespace WinFormsUI
                 }
                 else
                 {
+                    btn_C.BackColor = Color.Red;
+
                     studentsAnswersManager.Delete(temp);
                 }
             }
@@ -341,6 +389,7 @@ namespace WinFormsUI
                 if (questionManager.GetQuestionsById(studentQuestionId[questionIndex - 1]).Data.AnswerD ==
                     questionManager.GetQuestionsById(studentQuestionId[questionIndex - 1]).Data.CorrectAnswer)//cevap dogruysa
                 {
+                    btn_D.BackColor = Color.Green;
                     temp.SigmaCount++;
                     studentsAnswersManager.Update(temp);
                     if (temp.SigmaCount == 6)
@@ -351,6 +400,8 @@ namespace WinFormsUI
                 }
                 else
                 {
+                    btn_D.BackColor = Color.Red;
+
                     studentsAnswersManager.Delete(temp);
                 }
                 if (studentQuestionId.Count == questionIndex)
@@ -366,6 +417,8 @@ namespace WinFormsUI
                 if (questionManager.GetQuestionsById(studentQuestionIdToBeFirstTimeAsked[0]).Data.AnswerD ==
                     questionManager.GetQuestionsById(studentQuestionIdToBeFirstTimeAsked[0]).Data.CorrectAnswer)//cevap dogruysa
                 {
+                    btn_D.BackColor = Color.Green;
+
                     temp.SigmaCount++;
                     temp.QuestionAskDate = DateTime.Now;
                     studentsAnswersManager.Update(temp);
@@ -378,6 +431,8 @@ namespace WinFormsUI
                 }
                 else
                 {
+                    btn_D.BackColor = Color.Red;
+
                     studentsAnswersManager.Delete(temp);
                 }
             }
@@ -396,6 +451,30 @@ namespace WinFormsUI
 
             }
             
+
+        }
+
+       
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            timer1.Interval = 1000;
+            second = second - 1;
+            lbl_Second.Text = second.ToString();
+            lbl_Minute.Text = (minute - 1).ToString();
+            if (second ==0)
+            {
+                minute--;
+                lbl_Minute.Text = minute.ToString();
+                second = 60;
+            }
+            if (lbl_Minute.Text==Convert.ToString(0)&&lbl_Second.Text==Convert.ToString(0))
+            {
+                
+                timer1.Enabled = false;
+                MessageBox.Show("sınav bitti");
+                this.Hide();
+               
+            }
         }
     }
 }

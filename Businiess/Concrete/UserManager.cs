@@ -61,7 +61,7 @@ namespace Businiess.Concrete
 
         public IResult Update(User user)
         {
-            _userDal.Delete(user);
+            _userDal.Update(user);
             return new SuccessResult();
         }
         public bool UserValidation(string userName,string password)

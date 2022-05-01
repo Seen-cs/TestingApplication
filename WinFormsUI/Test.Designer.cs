@@ -29,12 +29,18 @@ namespace WinFormsUI
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btn_A = new System.Windows.Forms.Button();
             this.btn_B = new System.Windows.Forms.Button();
             this.btn_C = new System.Windows.Forms.Button();
             this.btn_D = new System.Windows.Forms.Button();
             this.lbl_QuestionText = new System.Windows.Forms.Label();
             this.btn_AskQuestion = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lbl_Minute = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lbl_Second = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // btn_A
@@ -85,11 +91,11 @@ namespace WinFormsUI
             // lbl_QuestionText
             // 
             this.lbl_QuestionText.AutoSize = true;
-            this.lbl_QuestionText.Location = new System.Drawing.Point(144, 90);
+            this.lbl_QuestionText.Location = new System.Drawing.Point(135, 88);
             this.lbl_QuestionText.Name = "lbl_QuestionText";
-            this.lbl_QuestionText.Size = new System.Drawing.Size(50, 20);
+            this.lbl_QuestionText.Size = new System.Drawing.Size(33, 20);
             this.lbl_QuestionText.TabIndex = 4;
-            this.lbl_QuestionText.Text = "label1";
+            this.lbl_QuestionText.Text = "----";
             this.lbl_QuestionText.Visible = false;
             // 
             // btn_AskQuestion
@@ -102,11 +108,63 @@ namespace WinFormsUI
             this.btn_AskQuestion.UseVisualStyleBackColor = true;
             this.btn_AskQuestion.Click += new System.EventHandler(this.btn_AskQuestion_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(649, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(108, 28);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Kalan Süre:";
+            this.label1.Visible = false;
+            // 
+            // lbl_Minute
+            // 
+            this.lbl_Minute.AutoSize = true;
+            this.lbl_Minute.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_Minute.Location = new System.Drawing.Point(776, 19);
+            this.lbl_Minute.Name = "lbl_Minute";
+            this.lbl_Minute.Size = new System.Drawing.Size(28, 28);
+            this.lbl_Minute.TabIndex = 7;
+            this.lbl_Minute.Text = "--";
+            this.lbl_Minute.Visible = false;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label3.Location = new System.Drawing.Point(821, 19);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(16, 28);
+            this.label3.TabIndex = 8;
+            this.label3.Text = ":";
+            this.label3.Visible = false;
+            // 
+            // lbl_Second
+            // 
+            this.lbl_Second.AutoSize = true;
+            this.lbl_Second.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_Second.Location = new System.Drawing.Point(849, 19);
+            this.lbl_Second.Name = "lbl_Second";
+            this.lbl_Second.Size = new System.Drawing.Size(28, 28);
+            this.lbl_Second.TabIndex = 9;
+            this.lbl_Second.Text = "--";
+            this.lbl_Second.Visible = false;
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Test
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(889, 579);
+            this.Controls.Add(this.lbl_Second);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.lbl_Minute);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btn_AskQuestion);
             this.Controls.Add(this.lbl_QuestionText);
             this.Controls.Add(this.btn_D);
@@ -129,5 +187,10 @@ namespace WinFormsUI
         private System.Windows.Forms.Button btn_D;
         private System.Windows.Forms.Label lbl_QuestionText;
         private System.Windows.Forms.Button btn_AskQuestion;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lbl_Minute;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lbl_Second;
+        private System.Windows.Forms.Timer timer1;
     }
 }

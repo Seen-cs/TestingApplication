@@ -39,7 +39,7 @@ namespace WinFormsUI
 
                 }
                 else {
-                    userManager.Add(new User { UserName = textBox1.Text, Password = textBox2.Text, UserTypeId = 3, FirstLoginDate = DateTime.Now });
+                    userManager.Add(new User { UserName = textBox1.Text, Password = textBox2.Text, UserTypeId = 3, LastLoginDate = DateTime.Now });
                     //kullanıcı kayıt olduktan sonra sınava yönlendirilmeli ilk gün kayıt oldugu gün sayılır
                     Test test = new Test()
                     {

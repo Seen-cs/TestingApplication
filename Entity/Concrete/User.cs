@@ -13,7 +13,7 @@ namespace Entity.Concrete
         public string LastName { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
-        public DateTime FirstLoginDate { get; set; }
+        public DateTime LastLoginDate { get; set; }
         public string Mail { get; set; }
     }
 }
