@@ -41,28 +41,16 @@ namespace WinFormsUI
         */
         public void btn_AskQuestion_Click(object sender, EventArgs e)
         {
-            btn_AskQuestion.Text = "Sonraki soru-->";
-            lbl_QuestionText.Visible = true;
-            btn_A.Visible = true;
-            btn_B.Visible = true;
-            btn_C.Visible = true;
-            btn_D.Visible = true;
-            btn_A.Enabled = true;
-            btn_B.Enabled = true;
-            btn_C.Enabled = true;
-            btn_D.Enabled = true;
-            lbl_Minute.Visible = true;
-            lbl_Second.Visible = true;
-            label1.Visible = true;
-            label3.Visible = true;
-            btn_A.BackColor = Color.White;
-            btn_B.BackColor = Color.White;
-            btn_C.BackColor = Color.White;
-            btn_D.BackColor = Color.White;
+            if (userManager.GetUserWithUserNameAndPassword(userName, password).Data.LastLoginDate == DateTime.Today)
+            {
+                MessageBox.Show("Bugünkü sınavınızı zaten tamamladınız. Yarın yine bekleriz :)");
+                this.Hide();
+            }
+            Design();
             var studentId = userManager.GetUserWithUserNameAndPassword(userName, password).Data.Id;
 
-            if (questionIndex>=0 && studentQuestionIdForSigma.Count()>questionIndex)
-            {                
+            if (questionIndex >= 0 && studentQuestionIdForSigma.Count() > questionIndex)
+            {
                 var questionAskDate = studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, studentQuestionIdForSigma[questionIndex]).Data.QuestionAskDate;
                 // int studentQuestionsCount = studentsAnswersManager.GetAllStudentAnswerWithStudentId(studentId).Data.Count();
                 if (DateTime.Now.Day == questionAskDate.Day + 1 ||
@@ -103,7 +91,7 @@ namespace WinFormsUI
             if (timer == 0)
             {
                 timer1.Start();
-                if ((questionManager.GetAll().Data.Count-studentQuestionIdForSigma.Count)>10)
+                if ((questionManager.GetAll().Data.Count - studentQuestionIdForSigma.Count) > 10)
                 {
                     minute = studentQuestionId.Count() + 10;
                 }
@@ -111,14 +99,14 @@ namespace WinFormsUI
                 {
                     minute = (questionManager.GetAll().Data.Count - studentQuestionIdForSigma.Count) + studentQuestionId.Count;
                 }
-                
+
             }
             timer++;
-            if (questionIndex > studentQuestionId.Count()|| questionIndex == 0 || questionIndex==-1)
+            if (questionIndex > studentQuestionId.Count() || questionIndex == 0 || questionIndex == -1)
             {
                 //eger sayı gelmesse sonsuz döngü olur!!
-                 //questionIndex = -1;
-                 studentQuestionIdToBeFirstTimeAsked.Clear();
+                //questionIndex = -1;
+                studentQuestionIdToBeFirstTimeAsked.Clear();
 
                 //bu kodu kotrol et
                 //bu kod sorulacak soru sayısı tabloda yoksa olan kadarını sormaya yarar
@@ -135,11 +123,14 @@ namespace WinFormsUI
                 if (numberOfQuestionsToBeAsked == 0)
                 {
                     MessageBox.Show("Sınav bitti");
+                    var temp = userManager.GetUserWithUserNameAndPassword(userName, password).Data;
+                    temp.LastLoginDate = DateTime.Today;
+                    userManager.Update(temp);
                     this.Hide();
                 }
                 Random random = new Random();
                 int questionID = random.Next(1, 8);
-                
+
                 while (numberOfQuestionsToBeAsked != 0)
                 {
                     if (studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, questionID).Success == false
@@ -178,7 +169,29 @@ namespace WinFormsUI
 
             }
         }
-        
+
+        private void Design()
+        {
+            btn_AskQuestion.Text = "Sonraki soru-->";
+            lbl_QuestionText.Visible = true;
+            btn_A.Visible = true;
+            btn_B.Visible = true;
+            btn_C.Visible = true;
+            btn_D.Visible = true;
+            btn_A.Enabled = true;
+            btn_B.Enabled = true;
+            btn_C.Enabled = true;
+            btn_D.Enabled = true;
+            lbl_Minute.Visible = true;
+            lbl_Second.Visible = true;
+            label1.Visible = true;
+            label3.Visible = true;
+            btn_A.BackColor = Color.White;
+            btn_B.BackColor = Color.White;
+            btn_C.BackColor = Color.White;
+            btn_D.BackColor = Color.White;
+        }
+
         public void btn_A_Click(object sender, EventArgs e)
         {
             btn_A.Enabled = false;
@@ -472,6 +485,9 @@ namespace WinFormsUI
                 
                 timer1.Enabled = false;
                 MessageBox.Show("sınav bitti");
+                var temp = userManager.GetUserWithUserNameAndPassword(userName, password).Data;
+                temp.LastLoginDate = DateTime.Today;
+                userManager.Update(temp);
                 this.Hide();
                
             }

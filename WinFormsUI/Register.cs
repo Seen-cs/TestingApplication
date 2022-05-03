@@ -18,10 +18,10 @@ namespace WinFormsUI
             InitializeComponent();
         }
         UserManager userManager = new UserManager(new EfUserDal());
-        private void button1_Click(object sender, EventArgs e)
+        private void btn_Register_Click(object sender, EventArgs e)
         {
 
-            if (userManager.GetUserWithUserNameAndPassword(textBox1.Text, textBox2.Text).Success)
+            if (userManager.GetUserWithUserNameAndPassword(txt_UserName.Text, txt_Password.Text).Success)
             {
                 MessageBox.Show("Bu kullanici zaten var.");
                 Login login = new Login();
@@ -30,7 +30,7 @@ namespace WinFormsUI
             }
             else
             {
-                if (textBox1.Text == "" || textBox2.Text == "")
+                if (txt_UserName.Text == "" || txt_Password.Text == "")
                 {
                     MessageBox.Show("Kullanıcı adı ve parola bos bırakılamaz");
                     Login login = new Login();
@@ -38,18 +38,61 @@ namespace WinFormsUI
                     this.Hide();
 
                 }
-                else {
-                    userManager.Add(new User { UserName = textBox1.Text, Password = textBox2.Text, UserTypeId = 3, LastLoginDate = DateTime.Now });
-                    //kullanıcı kayıt olduktan sonra sınava yönlendirilmeli ilk gün kayıt oldugu gün sayılır
-                    Test test = new Test()
+                else
+                {
+                    switch (cmbb_UserType.Text)
                     {
-                        userName = textBox1.Text.ToString(),
-                        password = textBox2.Text.ToString()
-                    };
-                test.Show();
-                this.Hide();
+                        case "Öğrenci":
+                        {
+                               UserAdd(3);
+                               Test test = new Test()
+                               {
+                                     userName = txt_UserName.Text.ToString(),
+                                     password = txt_Password.Text.ToString()
+                               };
+                               test.Show();
+                               this.Hide();
+                               break;
+                        }
+                        case "Eğitmen":
+                        {
+                                UserAdd(2);
+                                TrainerPanel trainerPanel = new TrainerPanel();
+                                trainerPanel.Show();
+                                this.Hide();
+                                break;
+                        }
+                        case "Admin":
+                        {
+                                MessageBox.Show("Admin olarak kayıt olmaya yetkiniz yok seen.cs@outlook.com hesabına mail atabilir talebinizi iletebilirsiniz.");
+                                break;
+                        }
+                        default:
+                        {
+                                MessageBox.Show("Lütfen kullanıcı tipi seçili olduğundan emin olun!");
+                                break;
+                        }
+
+
+                    }
+                    
+                   
+                    
                 }
             }
+        }
+
+        private void UserAdd(int userTypeId)
+        {
+            userManager.Add(new User
+            {
+                UserName = txt_UserName.Text,
+                Password = txt_Password.Text,
+                UserTypeId = userTypeId,
+                FirstName = txt_FirstName.Text,
+                LastName = txt_LastName.Text,
+                Mail = txt_email.Text
+            });
         }
     }
 }
