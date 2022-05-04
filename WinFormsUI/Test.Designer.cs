@@ -41,6 +41,8 @@ namespace WinFormsUI
             this.label3 = new System.Windows.Forms.Label();
             this.lbl_Second = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.pcbr_Image = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pcbr_Image)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_A
@@ -91,7 +93,7 @@ namespace WinFormsUI
             // lbl_QuestionText
             // 
             this.lbl_QuestionText.AutoSize = true;
-            this.lbl_QuestionText.Location = new System.Drawing.Point(135, 88);
+            this.lbl_QuestionText.Location = new System.Drawing.Point(266, 90);
             this.lbl_QuestionText.Name = "lbl_QuestionText";
             this.lbl_QuestionText.Size = new System.Drawing.Size(33, 20);
             this.lbl_QuestionText.TabIndex = 4;
@@ -156,11 +158,21 @@ namespace WinFormsUI
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // pcbr_Image
+            // 
+            this.pcbr_Image.Location = new System.Drawing.Point(12, 30);
+            this.pcbr_Image.Name = "pcbr_Image";
+            this.pcbr_Image.Size = new System.Drawing.Size(191, 139);
+            this.pcbr_Image.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pcbr_Image.TabIndex = 10;
+            this.pcbr_Image.TabStop = false;
+            // 
             // Test
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(889, 579);
+            this.Controls.Add(this.pcbr_Image);
             this.Controls.Add(this.lbl_Second);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lbl_Minute);
@@ -174,6 +186,7 @@ namespace WinFormsUI
             this.Name = "Test";
             this.Text = "Test";
             this.Load += new System.EventHandler(this.Test_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.pcbr_Image)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -192,5 +205,6 @@ namespace WinFormsUI
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lbl_Second;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.PictureBox pcbr_Image;
     }
 }

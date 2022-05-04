@@ -22,16 +22,27 @@ namespace WinFormsUI
 
         private void btn_Login_Click(object sender, EventArgs e)
         {
-                       
+            var userType = userManager.GetUserWithUserNameAndPassword(txt_UserName.Text, txt_Password.Text).Data.UserTypeId;
             if (userManager.UserValidation(txt_UserName.Text.ToString(), txt_Password.Text.ToString()) == true)
             {
-                Test test = new Test()
+                if (userType==2)
                 {
-                    userName = txt_UserName.Text.ToString(),
-                    password = txt_Password.Text.ToString()
-                };              
-                test.Show();
-                this.Hide();
+                    TrainerPanel trainerPanel = new TrainerPanel();
+                    trainerPanel.Show();
+                    this.Hide();
+                }
+               
+                if (userType == 3)
+                {
+                    Test test = new Test()
+                    {
+                        userName = txt_UserName.Text.ToString(),
+                        password = txt_Password.Text.ToString()
+                    };
+                    test.Show();
+                    this.Hide();
+                }
+                
             }
             else
                 MessageBox.Show("Bu kullanıcı bulunamadı!");

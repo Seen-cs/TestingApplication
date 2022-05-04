@@ -24,7 +24,7 @@ namespace WinFormsUI
         QuestionManager questionManager = new QuestionManager(new EfQuestionDal());
         UserManager userManager = new UserManager(new EfUserDal());
         List<int> randValue = new List<int>();
-        List<int> studentQuestionIdToBeFirstTimeAsked = new List<int>();
+        //List<int> studentQuestionIdToBeFirstTimeAsked = new List<int>();
         List<int> studentQuestionId = new List<int>();
         List<int> studentQuestionIdForSigma = new List<int>();
         int numberOfQuestionsToBeAsked = 3;
@@ -32,6 +32,7 @@ namespace WinFormsUI
         int timer = 0;
         int second = 60;
         int minute = 0;
+        int questionID;
         public string userName { get; set; }
         public string password { get; set; }
         /*
@@ -46,6 +47,8 @@ namespace WinFormsUI
                 MessageBox.Show("Bugünkü sınavınızı zaten tamamladınız. Yarın yine bekleriz :)");
                 this.Hide();
             }
+            
+
             Design();
             var studentId = userManager.GetUserWithUserNameAndPassword(userName, password).Data.Id;
 
@@ -70,6 +73,7 @@ namespace WinFormsUI
                     if (questionIndex < studentQuestionId.Count() && questionIndex != -1)
                     {
                         lbl_QuestionText.Text = studentsAnswersManager.GetStudentQuestionWithStudentIdAndQuestionId(studentId, studentQuestionId[questionIndex]).Data.QuestionText;
+                        pcbr_Image.ImageLocation = questionManager.GetQuestionsById(studentQuestionId[questionIndex]).Data.QuestionImagePath;
                         btn_A.Text = questionManager.GetQuestionsById(studentQuestionId[questionIndex]).Data.AnswerA;
                         btn_B.Text = questionManager.GetQuestionsById(studentQuestionId[questionIndex]).Data.AnswerB;
                         btn_C.Text = questionManager.GetQuestionsById(studentQuestionId[questionIndex]).Data.AnswerC;
@@ -106,7 +110,7 @@ namespace WinFormsUI
             {
                 //eger sayı gelmesse sonsuz döngü olur!!
                 //questionIndex = -1;
-                studentQuestionIdToBeFirstTimeAsked.Clear();
+               
 
                 //bu kodu kotrol et
                 //bu kod sorulacak soru sayısı tabloda yoksa olan kadarını sormaya yarar
@@ -129,7 +133,7 @@ namespace WinFormsUI
                     this.Hide();
                 }
                 Random random = new Random();
-                int questionID = random.Next(1, 8);
+                questionID = random.Next(1, 8);
 
                 while (numberOfQuestionsToBeAsked != 0)
                 {
@@ -137,8 +141,9 @@ namespace WinFormsUI
                         && randValue.Contains(questionID) == false)//soru onceden sorulmamıssa
                     {
                         randValue.Add(questionID);
-                        studentQuestionIdToBeFirstTimeAsked.Add(questionID);
+                        
                         lbl_QuestionText.Text = questionManager.GetQuestionsById(questionID).Data.QuestionText;
+                        pcbr_Image.ImageLocation = questionManager.GetQuestionsById(questionID).Data.QuestionImagePath;
                         btn_A.Text = questionManager.GetQuestionsById(questionID).Data.AnswerA;
                         btn_B.Text = questionManager.GetQuestionsById(questionID).Data.AnswerB;
                         btn_C.Text = questionManager.GetQuestionsById(questionID).Data.AnswerC;
@@ -231,9 +236,9 @@ namespace WinFormsUI
             }
             else //soru ilk defa soruluyorsa
             {
-                temp = studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, studentQuestionIdToBeFirstTimeAsked[0]).Data;
-                if (questionManager.GetQuestionsById(studentQuestionIdToBeFirstTimeAsked[0]).Data.AnswerA ==
-                    questionManager.GetQuestionsById(studentQuestionIdToBeFirstTimeAsked[0]).Data.CorrectAnswer)//cevap dogruysa
+                temp = studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, questionID).Data;
+                if (questionManager.GetQuestionsById(questionID).Data.AnswerA ==
+                    questionManager.GetQuestionsById(questionID).Data.CorrectAnswer)//cevap dogruysa
                 {
                     btn_A.BackColor = Color.Green;
                     temp.SigmaCount++;
@@ -298,9 +303,9 @@ namespace WinFormsUI
             }
             else //soru ilk defa soruluyorsa
             {
-                temp = studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, studentQuestionIdToBeFirstTimeAsked[0]).Data;
-                if (questionManager.GetQuestionsById(studentQuestionIdToBeFirstTimeAsked[0]).Data.AnswerB ==
-                    questionManager.GetQuestionsById(studentQuestionIdToBeFirstTimeAsked[0]).Data.CorrectAnswer)//cevap dogruysa
+                temp = studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, questionID).Data;
+                if (questionManager.GetQuestionsById(questionID).Data.AnswerB ==
+                    questionManager.GetQuestionsById(questionID).Data.CorrectAnswer)//cevap dogruysa
                 {
                     btn_B.BackColor = Color.Green;
 
@@ -362,9 +367,9 @@ namespace WinFormsUI
             }
             else //soru ilk defa soruluyorsa
             {
-                temp = studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, studentQuestionIdToBeFirstTimeAsked[0]).Data;
-                if (questionManager.GetQuestionsById(studentQuestionIdToBeFirstTimeAsked[0]).Data.AnswerC ==
-                    questionManager.GetQuestionsById(studentQuestionIdToBeFirstTimeAsked[0]).Data.CorrectAnswer)//cevap dogruysa
+                temp = studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, questionID).Data;
+                if (questionManager.GetQuestionsById(questionID).Data.AnswerC ==
+                    questionManager.GetQuestionsById(questionID).Data.CorrectAnswer)//cevap dogruysa
                 {
                     btn_C.BackColor = Color.Green;
 
@@ -426,9 +431,9 @@ namespace WinFormsUI
             }
             else //soru ilk defa soruluyorsa
             {
-                temp = studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, studentQuestionIdToBeFirstTimeAsked[0]).Data;
-                if (questionManager.GetQuestionsById(studentQuestionIdToBeFirstTimeAsked[0]).Data.AnswerD ==
-                    questionManager.GetQuestionsById(studentQuestionIdToBeFirstTimeAsked[0]).Data.CorrectAnswer)//cevap dogruysa
+                temp = studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, questionID).Data;
+                if (questionManager.GetQuestionsById(questionID).Data.AnswerD ==
+                    questionManager.GetQuestionsById(questionID).Data.CorrectAnswer)//cevap dogruysa
                 {
                     btn_D.BackColor = Color.Green;
 
