@@ -31,7 +31,12 @@ namespace WinFormsUI
                     trainerPanel.Show();
                     this.Hide();
                 }
-               
+                if (userType == 1)
+                {
+                    AdminPanel adminPanel = new AdminPanel();
+                    adminPanel.Show();
+                    this.Hide();
+                }
                 if (userType == 3)
                 {
                     Test test = new Test()
