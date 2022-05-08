@@ -12,7 +12,7 @@ namespace DataAccess
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-7T5TN1B;Database=TestingApplication;Trusted_Connection=true");
+            optionsBuilder.UseSqlServer(@"Server=DESKTOP-TOT4JFM;Database=TestingApplication;Trusted_Connection=true");
             
         }
         //protected override void OnModelCreating(ModelBuilder modelBuilder)

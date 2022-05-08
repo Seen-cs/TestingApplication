@@ -64,7 +64,7 @@ namespace WinFormsUI
                         }
                         case "Admin":
                         {
-                                MessageBox.Show("Admin olarak kayıt olmaya yetkiniz yok seen.cs@outlook.com hesabına mail atabilir talebinizi iletebilirsiniz.");
+                                MessageBox.Show("Admin olarak kayıt olmaya yetkiniz yok 4seen.cs@outlook.com hesabına mail atabilir talebinizi iletebilirsiniz.");
                                 break;
                         }
                         default:
@@ -91,7 +91,8 @@ namespace WinFormsUI
                 UserTypeId = userTypeId,
                 FirstName = txt_FirstName.Text,
                 LastName = txt_LastName.Text,
-                Mail = txt_email.Text
+                Mail = txt_email.Text,
+                
             });
         }
     }

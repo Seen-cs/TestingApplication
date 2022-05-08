@@ -41,6 +41,7 @@ namespace Businiess.Concrete
             return new SuccessDataResult<List<UserTypeDto>>(_userDal.GetAllUserWithUserType(userTypeId));
         }
 
+
         public IDataResult<User> GetUserWithUserNameAndEmail(string userName, string email)
         {
             if (_userDal.Get(u => u.UserName == userName && u.Mail == email) == null)

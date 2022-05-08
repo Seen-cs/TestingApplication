@@ -11,5 +11,8 @@ namespace DataAccess.DTOs
         public int QuestionId { get; set; }
         public string QuestionText { get; set; }
         public int SigmaCount { get; set; }
+        public int UnitId { get; set; }
+        public string UnitName { get; set; }
+
     }
 }

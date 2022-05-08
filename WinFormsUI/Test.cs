@@ -51,7 +51,7 @@ namespace WinFormsUI
 
             Design();
             var studentId = userManager.GetUserWithUserNameAndPassword(userName, password).Data.Id;
-
+            var student = userManager.GetUserWithUserNameAndPassword(userName, password).Data;
             if (questionIndex >= 0 && studentQuestionIdForSigma.Count() > questionIndex)
             {
                 var questionAskDate = studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, studentQuestionIdForSigma[questionIndex]).Data.QuestionAskDate;
@@ -130,6 +130,10 @@ namespace WinFormsUI
                     var temp = userManager.GetUserWithUserNameAndPassword(userName, password).Data;
                     temp.LastLoginDate = DateTime.Today;
                     userManager.Update(temp);
+                    ExamResult examResult = new ExamResult()
+                    { StudentId= userManager.GetUserWithUserNameAndPassword(userName, password).Data.Id
+                    };
+                    examResult.Show();
                     this.Hide();
                 }
                 Random random = new Random();
@@ -493,6 +497,10 @@ namespace WinFormsUI
                 var temp = userManager.GetUserWithUserNameAndPassword(userName, password).Data;
                 temp.LastLoginDate = DateTime.Today;
                 userManager.Update(temp);
+                ExamResult examResult = new ExamResult()
+                { StudentId = userManager.GetUserWithUserNameAndPassword(userName, password).Data.Id
+                };
+                examResult.Show();
                 this.Hide();
                
             }

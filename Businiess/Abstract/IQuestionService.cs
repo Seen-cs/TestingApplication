@@ -9,6 +9,7 @@ namespace Businiess.Abstract
     public interface IQuestionService
     {
         IDataResult<List<Question>> GetAll();
+        IDataResult<List<Question>> GetAllQuestionWithUnitId(int UnitId);
         IDataResult<Question> GetQuestionsById(int Id);
         IResult Add(Question question);
         IResult Delete(Question question);

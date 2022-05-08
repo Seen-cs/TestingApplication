@@ -43,5 +43,10 @@ namespace Businiess.Concrete
         {
             return new SuccessDataResult<Question>(_qestionDal.Get(q => q.Id == Id));
         }
+
+        public IDataResult<List<Question>> GetAllQuestionWithUnitId(int unitId)
+        {
+            return new SuccessDataResult<List<Question>>(_qestionDal.GetAll(q => q.UnitId == unitId));
+        }
     }
 }

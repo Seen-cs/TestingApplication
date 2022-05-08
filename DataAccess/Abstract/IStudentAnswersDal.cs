@@ -10,6 +10,7 @@ namespace DataAccess.Abstract
 {
     public interface IStudentAnswerDal : IEntityRepository<StudentAnswer>
     {
+        List<StudentAnswerDto> GetAllStudentAnswerWithStudentIdAndQuestionUnit(int studentId, int UnitId);
         StudentAnswerDto GetStudentQuestionWithStudentIdAndQuestionId(int studentId, int questionId);
     }
 }

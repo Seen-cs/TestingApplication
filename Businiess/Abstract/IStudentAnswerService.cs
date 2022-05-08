@@ -11,6 +11,7 @@ namespace Businiess.Abstract
     {
         IDataResult<List<StudentAnswer>> GetAllStudentAnswerWithStudentIdAndQuestionId(int studentId,int QuestionId);
         IDataResult<List<StudentAnswer>> GetAllStudentAnswerWithStudentId(int studentId);
+        IDataResult<List<StudentAnswerDto>> GetAllStudentAnswerWithStudentIdAndQuestionUnit(int studentId, int UnitId);
         IDataResult<StudentAnswerDto> GetStudentQuestionWithStudentIdAndQuestionId(int studentId, int questionId);
         IDataResult<StudentAnswer> GetStudentAnswerWithStudentIdAndQuestionId(int studentId, int QuestionId);
         IResult Add(StudentAnswer studentAnswer);

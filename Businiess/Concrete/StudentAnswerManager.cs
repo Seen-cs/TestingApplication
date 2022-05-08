@@ -29,6 +29,15 @@ namespace Businiess.Concrete
             return new SuccessResult();
         }
 
+        public IDataResult<List<StudentAnswerDto>> GetAllStudentAnswerWithStudentIdAndQuestionUnit(int studentId, int UnitId)
+        {
+            if (_studentAnswerDal.GetAllStudentAnswerWithStudentIdAndQuestionUnit(studentId, UnitId)==null)
+            {
+                return new ErrorDataResult<List<StudentAnswerDto>>();
+            }
+            return new SuccessDataResult<List<StudentAnswerDto>>(_studentAnswerDal.GetAllStudentAnswerWithStudentIdAndQuestionUnit(studentId, UnitId));
+        }
+
         public IDataResult<List<StudentAnswer>> GetAllStudentAnswerWithStudentId(int studentId)
         {
             if (_studentAnswerDal.GetAll(i => i.StudentId == studentId)==null)
@@ -53,15 +62,16 @@ namespace Businiess.Concrete
             return new SuccessDataResult<StudentAnswer>(_studentAnswerDal.Get(i => i.StudentId == studentId && i.QuestionId == QuestionId));
         }
 
-        public IDataResult<StudentAnswerDto> GetStudentQuestionWithStudentIdAndQuestionId(int studentId, int questionId)
-        {
-            return new SuccessDataResult<StudentAnswerDto>(_studentAnswerDal.GetStudentQuestionWithStudentIdAndQuestionId(studentId, questionId));
-        }
 
         public IResult Update(StudentAnswer studentAnswer)
         {
             _studentAnswerDal.Update(studentAnswer);
             return new SuccessResult();
+        }
+
+        public IDataResult<StudentAnswerDto> GetStudentQuestionWithStudentIdAndQuestionId(int studentId, int questionId)
+        {
+            return new SuccessDataResult<StudentAnswerDto>(_studentAnswerDal.GetStudentQuestionWithStudentIdAndQuestionId(studentId, questionId));
         }
     }
 }

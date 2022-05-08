@@ -11,7 +11,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfStudentAnswerDal : EfEntityRepositoryBase<StudentAnswer, TestingApplicationContext>, IStudentAnswerDal
     {
-        public StudentAnswerDto GetStudentQuestionWithStudentIdAndQuestionId(int studentId,int questionId)
+        public List<StudentAnswerDto> GetAllStudentAnswerWithStudentIdAndQuestionUnit(int studentId, int UnitId)
         {
                 using (TestingApplicationContext context = new TestingApplicationContext())
                 {
@@ -20,18 +20,44 @@ namespace DataAccess.Concrete.EntityFramework
                     var result = from sa in context.StudentsAnswers
                                  join q in context.Questions
                                  on sa.QuestionId equals q.Id
-                                 where sa.StudentId == studentId
-                                 where sa.QuestionId== questionId
+                                 join u in context.Units
+                                 on q.UnitId equals u.UnitId
+                                 where sa.StudentId==studentId
+                                 where u.UnitId == UnitId
                                  select new StudentAnswerDto 
                                  {
                                      StudentId= sa.StudentId,
                                      QuestionId = q.Id,
                                      QuestionText=q.QuestionText,
                                      SigmaCount= sa.SigmaCount,
+                                     UnitId=u.UnitId,
+                                     UnitName=u.UnitName
                                  };
-                    return result.FirstOrDefault();
+                    return result.ToList();
                 }
             
+        }
+
+        public StudentAnswerDto GetStudentQuestionWithStudentIdAndQuestionId(int studentId, int questionId)
+        {
+            using (TestingApplicationContext context = new TestingApplicationContext())
+            {
+
+
+                var result = from sa in context.StudentsAnswers
+                             join q in context.Questions
+                             on sa.QuestionId equals q.Id
+                             where sa.StudentId == studentId
+                             where q.Id == questionId
+                             select new StudentAnswerDto
+                             {
+                                 StudentId = sa.StudentId,
+                                 QuestionId = q.Id,
+                                 QuestionText = q.QuestionText,
+                                 SigmaCount = sa.SigmaCount,
+                             };
+                return result.FirstOrDefault();
+            }
         }
     }
 }
