@@ -9,7 +9,6 @@ namespace Businiess.Abstract
     public interface IQuestionToAddService
     {
         IDataResult<List<QuestionToAdd>> GetAll();
-        IDataResult<QuestionToAdd> GetQuestionsById(int Id);
         IResult Add(QuestionToAdd questionToAdd);
         IResult Delete(QuestionToAdd questionToAdd);
         IResult Update(QuestionToAdd questionToAdd);

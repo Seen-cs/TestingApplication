@@ -33,10 +33,6 @@ namespace Businiess.Concrete
             return new SuccessDataResult<List<QuestionToAdd>>(_questionToAdd.GetAll());
         }
 
-        public IDataResult<QuestionToAdd> GetQuestionsById(int Id)
-        {
-            throw new NotImplementedException();
-        }
 
         public IDataResult<QuestionToAdd> GetQuestionToAddWithQuestionText(string questionText)
         {

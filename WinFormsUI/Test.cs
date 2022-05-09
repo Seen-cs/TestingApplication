@@ -24,7 +24,6 @@ namespace WinFormsUI
         QuestionManager questionManager = new QuestionManager(new EfQuestionDal());
         UserManager userManager = new UserManager(new EfUserDal());
         List<int> randValue = new List<int>();
-        //List<int> studentQuestionIdToBeFirstTimeAsked = new List<int>();
         List<int> studentQuestionId = new List<int>();
         List<int> studentQuestionIdForSigma = new List<int>();
         int numberOfQuestionsToBeAsked = 3;
@@ -35,11 +34,6 @@ namespace WinFormsUI
         int questionID;
         public string userName { get; set; }
         public string password { get; set; }
-        /*
-
-                soruların resimli olması seceneği eklenmeli
-
-        */
         public void btn_AskQuestion_Click(object sender, EventArgs e)
         {
             if (userManager.GetUserWithUserNameAndPassword(userName, password).Data.LastLoginDate == DateTime.Today)
@@ -48,7 +42,6 @@ namespace WinFormsUI
                 this.Hide();
             }
             
-
             Design();
             var studentId = userManager.GetUserWithUserNameAndPassword(userName, password).Data.Id;
             var student = userManager.GetUserWithUserNameAndPassword(userName, password).Data;
@@ -56,11 +49,11 @@ namespace WinFormsUI
             {
                 var questionAskDate = studentsAnswersManager.GetStudentAnswerWithStudentIdAndQuestionId(studentId, studentQuestionIdForSigma[questionIndex]).Data.QuestionAskDate;
                 // int studentQuestionsCount = studentsAnswersManager.GetAllStudentAnswerWithStudentId(studentId).Data.Count();
-                if (DateTime.Now.Day == questionAskDate.Day + 1 ||
-                    DateTime.Now.Day == questionAskDate.Day + 7 ||
-                    DateTime.Now.Day == questionAskDate.Day + 30 ||
-                    DateTime.Now.Day == questionAskDate.Day + 90 ||
-                    DateTime.Now.Day == questionAskDate.Day + 365)
+                if (DateTime.Now.Day == questionAskDate.Day + student.SigmaPeriod1 ||
+                    DateTime.Now.Day == questionAskDate.Day + student.SigmaPeriod2 ||
+                    DateTime.Now.Day == questionAskDate.Day + student.SigmaPeriod3 ||
+                    DateTime.Now.Day == questionAskDate.Day + student.SigmaPeriod4 ||
+                    DateTime.Now.Day == questionAskDate.Day + student.SigmaPeriod5)
                 {
                     foreach (var item in studentsAnswersManager.GetAllStudentAnswerWithStudentId(studentId).Data)
                     {
@@ -81,10 +74,6 @@ namespace WinFormsUI
                         questionIndex++;
                     }
 
-                    //if (questionIndex <= studentQuestionId.Count() && questionIndex != -1)
-                    //{
-                    //    questionIndex++;
-                    //}
 
                 }
             }
@@ -108,12 +97,7 @@ namespace WinFormsUI
             timer++;
             if (questionIndex > studentQuestionId.Count() || questionIndex == 0 || questionIndex == -1)
             {
-                //eger sayı gelmesse sonsuz döngü olur!!
-                //questionIndex = -1;
                
-
-                //bu kodu kotrol et
-                //bu kod sorulacak soru sayısı tabloda yoksa olan kadarını sormaya yarar
                 if (studentsAnswersManager.GetAllStudentAnswerWithStudentId(studentId).Success == true)
                 {
                     if (questionManager.GetAll().Data.Count() -
@@ -162,10 +146,6 @@ namespace WinFormsUI
                         break;
 
                     }
-                    //cok onemli hata PATLIYOR!!!
-                    // HATA: ilk soru sorulur sonraki soru daha ilk soru gözükmeden ekrana yazılır.
-                    // diğer soruyu soracak zaman bazlı olabilir 
-                    //cozuldu gibi
 
                     else
                     {

@@ -41,6 +41,10 @@ namespace Businiess.Concrete
             return new SuccessDataResult<List<UserTypeDto>>(_userDal.GetAllUserWithUserType(userTypeId));
         }
 
+        public IDataResult<User> GetUserWithId(int id)
+        {
+            return new SuccessDataResult<User>(_userDal.Get(u=>u.Id==id));
+        }
 
         public IDataResult<User> GetUserWithUserNameAndEmail(string userName, string email)
         {

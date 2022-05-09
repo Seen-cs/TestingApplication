@@ -13,6 +13,7 @@ namespace Businiess.Abstract
         IDataResult<User> GetUserWithUserNameAndPassword(string userName,string Password);
         IDataResult<User> GetUserWithUserNameAndEmail(string userName, string email);
         IDataResult<List<UserTypeDto>> GetAllUserWithUserType(int userTypeId);
+        IDataResult<User> GetUserWithId(int id);
         IResult Add(User user);
         IResult Delete(User user);
         IResult Update(User user);
