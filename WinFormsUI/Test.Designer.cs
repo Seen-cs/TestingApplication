@@ -42,14 +42,18 @@ namespace WinFormsUI
             this.lbl_Second = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.pcbr_Image = new System.Windows.Forms.PictureBox();
+            this.lbl_A = new System.Windows.Forms.Label();
+            this.lbl_B = new System.Windows.Forms.Label();
+            this.lbl_C = new System.Windows.Forms.Label();
+            this.lbl_D = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pcbr_Image)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_A
             // 
-            this.btn_A.Location = new System.Drawing.Point(43, 211);
+            this.btn_A.Location = new System.Drawing.Point(29, 312);
             this.btn_A.Name = "btn_A";
-            this.btn_A.Size = new System.Drawing.Size(117, 51);
+            this.btn_A.Size = new System.Drawing.Size(63, 51);
             this.btn_A.TabIndex = 0;
             this.btn_A.Text = "A";
             this.btn_A.UseVisualStyleBackColor = true;
@@ -58,9 +62,9 @@ namespace WinFormsUI
             // 
             // btn_B
             // 
-            this.btn_B.Location = new System.Drawing.Point(197, 211);
+            this.btn_B.Location = new System.Drawing.Point(29, 369);
             this.btn_B.Name = "btn_B";
-            this.btn_B.Size = new System.Drawing.Size(102, 51);
+            this.btn_B.Size = new System.Drawing.Size(63, 51);
             this.btn_B.TabIndex = 1;
             this.btn_B.Text = "B";
             this.btn_B.UseVisualStyleBackColor = true;
@@ -70,9 +74,9 @@ namespace WinFormsUI
             // btn_C
             // 
             this.btn_C.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btn_C.Location = new System.Drawing.Point(360, 211);
+            this.btn_C.Location = new System.Drawing.Point(29, 426);
             this.btn_C.Name = "btn_C";
-            this.btn_C.Size = new System.Drawing.Size(154, 51);
+            this.btn_C.Size = new System.Drawing.Size(63, 51);
             this.btn_C.TabIndex = 2;
             this.btn_C.Text = "C";
             this.btn_C.UseVisualStyleBackColor = true;
@@ -81,9 +85,9 @@ namespace WinFormsUI
             // 
             // btn_D
             // 
-            this.btn_D.Location = new System.Drawing.Point(554, 211);
+            this.btn_D.Location = new System.Drawing.Point(29, 492);
             this.btn_D.Name = "btn_D";
-            this.btn_D.Size = new System.Drawing.Size(161, 51);
+            this.btn_D.Size = new System.Drawing.Size(63, 51);
             this.btn_D.TabIndex = 3;
             this.btn_D.Text = "D";
             this.btn_D.UseVisualStyleBackColor = true;
@@ -93,16 +97,17 @@ namespace WinFormsUI
             // lbl_QuestionText
             // 
             this.lbl_QuestionText.AutoSize = true;
-            this.lbl_QuestionText.Location = new System.Drawing.Point(266, 90);
+            this.lbl_QuestionText.Location = new System.Drawing.Point(29, 80);
             this.lbl_QuestionText.Name = "lbl_QuestionText";
             this.lbl_QuestionText.Size = new System.Drawing.Size(33, 20);
             this.lbl_QuestionText.TabIndex = 4;
             this.lbl_QuestionText.Text = "----";
             this.lbl_QuestionText.Visible = false;
+            this.lbl_QuestionText.Click += new System.EventHandler(this.lbl_QuestionText_Click);
             // 
             // btn_AskQuestion
             // 
-            this.btn_AskQuestion.Location = new System.Drawing.Point(270, 348);
+            this.btn_AskQuestion.Location = new System.Drawing.Point(560, 488);
             this.btn_AskQuestion.Name = "btn_AskQuestion";
             this.btn_AskQuestion.Size = new System.Drawing.Size(244, 62);
             this.btn_AskQuestion.TabIndex = 5;
@@ -160,18 +165,60 @@ namespace WinFormsUI
             // 
             // pcbr_Image
             // 
-            this.pcbr_Image.Location = new System.Drawing.Point(12, 30);
+            this.pcbr_Image.Location = new System.Drawing.Point(454, 70);
             this.pcbr_Image.Name = "pcbr_Image";
-            this.pcbr_Image.Size = new System.Drawing.Size(191, 139);
+            this.pcbr_Image.Size = new System.Drawing.Size(303, 178);
             this.pcbr_Image.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pcbr_Image.TabIndex = 10;
             this.pcbr_Image.TabStop = false;
+            this.pcbr_Image.Click += new System.EventHandler(this.pcbr_Image_Click);
+            // 
+            // lbl_A
+            // 
+            this.lbl_A.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.lbl_A.AutoSize = true;
+            this.lbl_A.Location = new System.Drawing.Point(110, 327);
+            this.lbl_A.Name = "lbl_A";
+            this.lbl_A.Size = new System.Drawing.Size(33, 20);
+            this.lbl_A.TabIndex = 11;
+            this.lbl_A.Text = "----";
+            // 
+            // lbl_B
+            // 
+            this.lbl_B.AutoSize = true;
+            this.lbl_B.Location = new System.Drawing.Point(110, 384);
+            this.lbl_B.Name = "lbl_B";
+            this.lbl_B.Size = new System.Drawing.Size(33, 20);
+            this.lbl_B.TabIndex = 12;
+            this.lbl_B.Text = "----";
+            // 
+            // lbl_C
+            // 
+            this.lbl_C.AutoSize = true;
+            this.lbl_C.Location = new System.Drawing.Point(110, 441);
+            this.lbl_C.Name = "lbl_C";
+            this.lbl_C.Size = new System.Drawing.Size(33, 20);
+            this.lbl_C.TabIndex = 13;
+            this.lbl_C.Text = "----";
+            // 
+            // lbl_D
+            // 
+            this.lbl_D.AutoSize = true;
+            this.lbl_D.Location = new System.Drawing.Point(110, 507);
+            this.lbl_D.Name = "lbl_D";
+            this.lbl_D.Size = new System.Drawing.Size(33, 20);
+            this.lbl_D.TabIndex = 14;
+            this.lbl_D.Text = "----";
             // 
             // Test
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(889, 579);
+            this.Controls.Add(this.lbl_D);
+            this.Controls.Add(this.lbl_C);
+            this.Controls.Add(this.lbl_B);
+            this.Controls.Add(this.lbl_A);
             this.Controls.Add(this.pcbr_Image);
             this.Controls.Add(this.lbl_Second);
             this.Controls.Add(this.label3);
@@ -206,5 +253,9 @@ namespace WinFormsUI
         private System.Windows.Forms.Label lbl_Second;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.PictureBox pcbr_Image;
+        private System.Windows.Forms.Label lbl_A;
+        private System.Windows.Forms.Label lbl_B;
+        private System.Windows.Forms.Label lbl_C;
+        private System.Windows.Forms.Label lbl_D;
     }
 }

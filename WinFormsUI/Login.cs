@@ -22,9 +22,10 @@ namespace WinFormsUI
 
         private void btn_Login_Click(object sender, EventArgs e)
         {
-            var userType = userManager.GetUserWithUserNameAndPassword(txt_UserName.Text, txt_Password.Text).Data.UserTypeId;
+            
             if (userManager.UserValidation(txt_UserName.Text.ToString(), txt_Password.Text.ToString()) == true)
             {
+                var userType = userManager.GetUserWithUserNameAndPassword(txt_UserName.Text, txt_Password.Text).Data.UserTypeId;
                 if (userType==2)
                 {
                     TrainerPanel trainerPanel = new TrainerPanel();

@@ -14,7 +14,7 @@ namespace WinFormsUI
     public partial class TrainerPanel : Form
     {
         QuestionToAddManager questionToAdd = new QuestionToAddManager(new EFQuestionToAddDal());
-        QuestionToAdd question = new QuestionToAdd();
+       
         public TrainerPanel()
         {
             InitializeComponent();
@@ -29,6 +29,7 @@ namespace WinFormsUI
 
         private void btn_Register_Click(object sender, EventArgs e)
         {
+            QuestionToAdd question = new QuestionToAdd();
             question.UnitId = 0;
             if (cmb_Unit.Text == "Matematik")
             {
@@ -62,37 +63,47 @@ namespace WinFormsUI
                     question.CorrectAnswer = txt_A.Text;
                     questionToAdd.Add(question);
                     MessageBox.Show("Kaydedildi");
+                    check();
                     clear();
 
 
                 }
                 else if (check_B.Checked == true)
                 {
+
                     question.CorrectAnswer = txt_B.Text;
                     questionToAdd.Add(question);
                     MessageBox.Show("Kaydedildi");
+                    check();
                     clear();
 
                 }
                 else if (check_C.Checked == true)
                 {
+                    
+
                     question.CorrectAnswer = txt_C.Text;
                     questionToAdd.Add(question);
                     MessageBox.Show("Kaydedildi");
+                    check();
                     clear();
 
                 }
                 else if (check_D.Checked == true)
                 {
+                    
+
                     question.CorrectAnswer = txt_D.Text;
                     questionToAdd.Add(question);
                     MessageBox.Show("Kaydedildi");
+                    check();
                     clear();
 
                 }
                 else
                 {
                     MessageBox.Show("Dogru Cevabı Seçiniz");
+
                 }
             }
             else
@@ -108,8 +119,16 @@ namespace WinFormsUI
                 txt_C.Clear();
                 txt_D.Clear();
             }
-            
-           
+            void check()
+            {
+                check_A.Checked = false;
+                check_B.Checked = false;
+                check_C.Checked = false;
+                check_D.Checked = false;
+
+            }
+
+
         }
 
         private void check_A_CheckedChanged(object sender, EventArgs e)
@@ -117,6 +136,7 @@ namespace WinFormsUI
             check_B.Checked = false;
             check_C.Checked = false;
             check_D.Checked = false;
+            
         }
 
         private void check_B_CheckedChanged(object sender, EventArgs e)

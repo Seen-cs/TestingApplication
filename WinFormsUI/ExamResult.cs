@@ -27,15 +27,13 @@ namespace WinFormsUI
         List<decimal> numberOfQuestionsAnsweredInTheUnit = new List<decimal>();
         decimal totalSigmaCount;
         decimal numberOfQuestionsAnswered;
+        decimal leastKnownUnit;
+        int leastKnownUnitId=1;
+
         private void ExamResult_Load(object sender, EventArgs e)
         {
-            var temp = userManager.GetUserWithId(StudentId).Data;
-            temp.SigmaPeriod1 = Convert.ToInt32(txt_SigmaPeriod1.Text);
-            temp.SigmaPeriod2 = Convert.ToInt32(txt_SigmaPeriod1.Text);
-            temp.SigmaPeriod3 = Convert.ToInt32(txt_SigmaPeriod1.Text);
-            temp.SigmaPeriod4 = Convert.ToInt32(txt_SigmaPeriod1.Text);
-            temp.SigmaPeriod5 = Convert.ToInt32(txt_SigmaPeriod1.Text);
-            userManager.Update(temp);
+            
+          
             foreach (var unit in unitManager.GetAll().Data)
             {
                 totalNumberOfQuestionsInTheUnit.Add(questionManager.GetAllQuestionWithUnitId(unit.UnitId).Data.Count());
@@ -91,7 +89,7 @@ namespace WinFormsUI
             StringFormat myStringFormat = new StringFormat();
             myStringFormat.Alignment = StringAlignment.Far;
 
-
+            leastKnownUnit = Math.Round(((totalSigmaCountInTheUnit[0] / (totalNumberOfQuestionsInTheUnit[0] * 6)) * 100), 2);
             foreach (var item in unitManager.GetAll().Data)
             {
                 e.Graphics.DrawString(item.UnitName, myFont, sbrush, 160, y, myStringFormat);
@@ -100,6 +98,12 @@ namespace WinFormsUI
                     e.Graphics.DrawString(Math.Round(((numberOfQuestionsAnsweredInTheUnit[item.UnitId - 1] / totalNumberOfQuestionsInTheUnit[item.UnitId - 1]) * 100), 2).ToString(), myFont, sbrush, 220, y);
                     e.Graphics.DrawString(Math.Round((totalSigmaCountInTheUnit[item.UnitId - 1] / (totalNumberOfQuestionsInTheUnit[item.UnitId - 1] * 6)), 2).ToString(), myFont, sbrush, 530, y, myStringFormat);
                     e.Graphics.DrawString(Math.Round(((totalSigmaCountInTheUnit[item.UnitId - 1] / (totalNumberOfQuestionsInTheUnit[item.UnitId - 1] * 6)) * 100), 2).ToString(), myFont, sbrush, 700, y, myStringFormat);
+                    if (leastKnownUnit> Math.Round(((totalSigmaCountInTheUnit[item.UnitId - 1] / (totalNumberOfQuestionsInTheUnit[item.UnitId - 1] * 6)) * 100), 2))
+                    {
+                        leastKnownUnit = Math.Round(((totalSigmaCountInTheUnit[item.UnitId - 1] / (totalNumberOfQuestionsInTheUnit[item.UnitId - 1] * 6)) * 100), 2);
+                        leastKnownUnitId = item.UnitId;
+                    }
+                    
                 }
                 else
                 {
@@ -113,8 +117,32 @@ namespace WinFormsUI
             }
 
             e.Graphics.DrawLine(myPen, 120, y, 750, y);
+
  
         }
 
+        private void btn_Test_Click(object sender, EventArgs e)
+        {
+
+
+            frmSubjectBasedTest frmSubjectBasedTest = new frmSubjectBasedTest()
+            {
+                LeastKnownUnitId = leastKnownUnitId
+            };
+            frmSubjectBasedTest.Show();
+            this.Hide();
+        }
+
+        private void btn_SigmaPeriyot_Click(object sender, EventArgs e)
+        {
+            var temp = userManager.GetUserWithId(StudentId).Data;
+            temp.SigmaPeriod1 = Convert.ToInt32(txt_SigmaPeriod1.Text);
+            temp.SigmaPeriod2 = Convert.ToInt32(txt_SigmaPeriod2.Text);
+            temp.SigmaPeriod3 = Convert.ToInt32(txt_SigmaPeriod3.Text);
+            temp.SigmaPeriod4 = Convert.ToInt32(txt_SigmaPeriod4.Text);
+            temp.SigmaPeriod5 = Convert.ToInt32(txt_SigmaPeriod5.Text);
+            userManager.Update(temp);
+            Console.WriteLine("Değiştirildi");
+        }
     }
 }

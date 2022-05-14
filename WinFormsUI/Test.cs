@@ -26,7 +26,7 @@ namespace WinFormsUI
         List<int> randValue = new List<int>();
         List<int> studentQuestionId = new List<int>();
         List<int> studentQuestionIdForSigma = new List<int>();
-        int numberOfQuestionsToBeAsked = 3;
+        int numberOfQuestionsToBeAsked = 10;
         int questionIndex = 0;
         int timer = 0;
         int second = 60;
@@ -67,10 +67,10 @@ namespace WinFormsUI
                     {
                         lbl_QuestionText.Text = studentsAnswersManager.GetStudentQuestionWithStudentIdAndQuestionId(studentId, studentQuestionId[questionIndex]).Data.QuestionText;
                         pcbr_Image.ImageLocation = questionManager.GetQuestionsById(studentQuestionId[questionIndex]).Data.QuestionImagePath;
-                        btn_A.Text = questionManager.GetQuestionsById(studentQuestionId[questionIndex]).Data.AnswerA;
-                        btn_B.Text = questionManager.GetQuestionsById(studentQuestionId[questionIndex]).Data.AnswerB;
-                        btn_C.Text = questionManager.GetQuestionsById(studentQuestionId[questionIndex]).Data.AnswerC;
-                        btn_D.Text = questionManager.GetQuestionsById(studentQuestionId[questionIndex]).Data.AnswerD;
+                        lbl_A.Text = questionManager.GetQuestionsById(studentQuestionId[questionIndex]).Data.AnswerA;
+                        lbl_B.Text = questionManager.GetQuestionsById(studentQuestionId[questionIndex]).Data.AnswerB;
+                        lbl_C.Text = questionManager.GetQuestionsById(studentQuestionId[questionIndex]).Data.AnswerC;
+                        lbl_D.Text = questionManager.GetQuestionsById(studentQuestionId[questionIndex]).Data.AnswerD;
                         questionIndex++;
                     }
 
@@ -121,7 +121,7 @@ namespace WinFormsUI
                     this.Hide();
                 }
                 Random random = new Random();
-                questionID = random.Next(1, 8);
+                questionID = random.Next(1, 20);
 
                 while (numberOfQuestionsToBeAsked != 0)
                 {
@@ -132,10 +132,10 @@ namespace WinFormsUI
                         
                         lbl_QuestionText.Text = questionManager.GetQuestionsById(questionID).Data.QuestionText;
                         pcbr_Image.ImageLocation = questionManager.GetQuestionsById(questionID).Data.QuestionImagePath;
-                        btn_A.Text = questionManager.GetQuestionsById(questionID).Data.AnswerA;
-                        btn_B.Text = questionManager.GetQuestionsById(questionID).Data.AnswerB;
-                        btn_C.Text = questionManager.GetQuestionsById(questionID).Data.AnswerC;
-                        btn_D.Text = questionManager.GetQuestionsById(questionID).Data.AnswerD;
+                        lbl_A.Text = questionManager.GetQuestionsById(questionID).Data.AnswerA;
+                        lbl_B.Text = questionManager.GetQuestionsById(questionID).Data.AnswerB;
+                        lbl_C.Text = questionManager.GetQuestionsById(questionID).Data.AnswerC;
+                        lbl_D.Text = questionManager.GetQuestionsById(questionID).Data.AnswerD;
                         numberOfQuestionsToBeAsked--;
                         studentsAnswersManager.Add(new StudentAnswer
                         {
@@ -150,7 +150,7 @@ namespace WinFormsUI
                     else
                     {
                         Random random1 = new Random();
-                        questionID = random1.Next(1, 8);
+                        questionID = random1.Next(1,20);
                     }
 
                 }
@@ -484,6 +484,16 @@ namespace WinFormsUI
                 this.Hide();
                
             }
+        }
+
+        private void pcbr_Image_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lbl_QuestionText_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

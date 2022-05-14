@@ -48,15 +48,17 @@ namespace WinFormsUI
             this.label5 = new System.Windows.Forms.Label();
             this.txt_SigmaPeriod5 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.btn_Test = new System.Windows.Forms.Button();
+            this.btn_SigmaPeriyot = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lbl_ExamResult
             // 
             this.lbl_ExamResult.AutoSize = true;
-            this.lbl_ExamResult.Font = new System.Drawing.Font("Showcard Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_ExamResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lbl_ExamResult.Location = new System.Drawing.Point(217, 58);
             this.lbl_ExamResult.Name = "lbl_ExamResult";
-            this.lbl_ExamResult.Size = new System.Drawing.Size(340, 26);
+            this.lbl_ExamResult.Size = new System.Drawing.Size(262, 25);
             this.lbl_ExamResult.TabIndex = 0;
             this.lbl_ExamResult.Text = "Tebrikler sınavı tamamladınız";
             // 
@@ -190,11 +192,33 @@ namespace WinFormsUI
             this.label6.TabIndex = 15;
             this.label6.Text = "5. Sigma Periyotu:";
             // 
+            // btn_Test
+            // 
+            this.btn_Test.Location = new System.Drawing.Point(469, 356);
+            this.btn_Test.Name = "btn_Test";
+            this.btn_Test.Size = new System.Drawing.Size(319, 29);
+            this.btn_Test.TabIndex = 17;
+            this.btn_Test.Text = "Eksik Oldugum Konudaki Sınava Git";
+            this.btn_Test.UseVisualStyleBackColor = true;
+            this.btn_Test.Click += new System.EventHandler(this.btn_Test_Click);
+            // 
+            // btn_SigmaPeriyot
+            // 
+            this.btn_SigmaPeriyot.Location = new System.Drawing.Point(180, 409);
+            this.btn_SigmaPeriyot.Name = "btn_SigmaPeriyot";
+            this.btn_SigmaPeriyot.Size = new System.Drawing.Size(125, 29);
+            this.btn_SigmaPeriyot.TabIndex = 18;
+            this.btn_SigmaPeriyot.Text = "button1";
+            this.btn_SigmaPeriyot.UseVisualStyleBackColor = true;
+            this.btn_SigmaPeriyot.Click += new System.EventHandler(this.btn_SigmaPeriyot_Click);
+            // 
             // ExamResult
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btn_SigmaPeriyot);
+            this.Controls.Add(this.btn_Test);
             this.Controls.Add(this.txt_SigmaPeriod5);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.txt_SigmaPeriod4);
@@ -237,5 +261,7 @@ namespace WinFormsUI
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txt_SigmaPeriod5;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button btn_Test;
+        private System.Windows.Forms.Button btn_SigmaPeriyot;
     }
 }
