@@ -52,5 +52,16 @@ namespace WinFormsUI
             
         }
 
+        private void pcr_Back_Click(object sender, EventArgs e)
+        {
+            Login login = new Login();
+            login.Show();
+            this.Hide();
+        }
+
+        private void pcr_Exit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

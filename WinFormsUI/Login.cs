@@ -68,5 +68,20 @@ namespace WinFormsUI
             iforgetMyPassword.Show();
             this.Hide();
         }
+
+        private void pcr_Exit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void btn_Login_MouseHover(object sender, EventArgs e)
+        {
+            btn_Login.ForeColor = Color.Green;
+        }
+
+        private void btn_Login_MouseLeave(object sender, EventArgs e)
+        {
+            btn_Login.ForeColor = Color.Black;
+        }
     }
 }

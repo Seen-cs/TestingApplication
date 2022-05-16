@@ -144,5 +144,50 @@ namespace WinFormsUI
             userManager.Update(temp);
             Console.WriteLine("Değiştirildi");
         }
+
+        private void pcr_Exit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void btn_Preview_MouseHover(object sender, EventArgs e)
+        {
+            btn_Preview.ForeColor = Color.Yellow;
+        }
+
+        private void btn_Preview_MouseLeave(object sender, EventArgs e)
+        {
+            btn_Preview.ForeColor = Color.Black;
+        }
+
+        private void Btn_Print_MouseHover(object sender, EventArgs e)
+        {
+            Btn_Print.ForeColor = Color.Orange;
+        }
+
+        private void Btn_Print_MouseLeave(object sender, EventArgs e)
+        {
+            Btn_Print.ForeColor = Color.Black;
+        }
+
+        private void btn_Test_MouseHover(object sender, EventArgs e)
+        {
+            btn_Test.ForeColor = Color.Green;   
+        }
+
+        private void btn_Test_MouseLeave(object sender, EventArgs e)
+        {
+            btn_Test.ForeColor = Color.Black;
+        }
+
+        private void btn_SigmaPeriyot_MouseHover(object sender, EventArgs e)
+        {
+            btn_SigmaPeriyot.ForeColor = Color.Green;
+        }
+
+        private void btn_SigmaPeriyot_MouseLeave(object sender, EventArgs e)
+        {
+            btn_SigmaPeriyot.ForeColor = Color.Black;
+        }
     }
 }

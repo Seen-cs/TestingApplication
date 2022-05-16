@@ -21,7 +21,7 @@ namespace WinFormsUI
         List<int> questionId=new List<int>();
         int numberQuestion = -1;
 
-        private void btn_AskQuestion_Click(object sender, EventArgs e)
+        private void btn_Start_Test_Click(object sender, EventArgs e)
         {
             Design();
            // btn_AskQuestion.Text = "Sonraki Soru";
@@ -33,17 +33,17 @@ namespace WinFormsUI
                 btnEnableTrue();
                 numberQuestion++;
                 lbl_QuestionText.Text = questionManager.GetQuestionsById(questionId[numberQuestion]).Data.QuestionText;
-                btn_A.Text = questionManager.GetQuestionsById(questionId[numberQuestion]).Data.AnswerA;
-                btn_B.Text = questionManager.GetQuestionsById(questionId[numberQuestion]).Data.AnswerB;
-                btn_C.Text = questionManager.GetQuestionsById(questionId[numberQuestion]).Data.AnswerC;
-                btn_D.Text = questionManager.GetQuestionsById(questionId[numberQuestion]).Data.AnswerD;
+                lbl_A.Text = questionManager.GetQuestionsById(questionId[numberQuestion]).Data.AnswerA;
+                lbl_B.Text = questionManager.GetQuestionsById(questionId[numberQuestion]).Data.AnswerB;
+                lbl_C.Text = questionManager.GetQuestionsById(questionId[numberQuestion]).Data.AnswerC;
+                lbl_D.Text = questionManager.GetQuestionsById(questionId[numberQuestion]).Data.AnswerD;
                 
             }
             
             else
             {
                 MessageBox.Show("Sınav Bitti ");
-                btn_AskQuestion.Enabled = false;
+                btn_Start_Test.Enabled = false;
             }
         }
         void btnEnableFalse()
@@ -92,7 +92,7 @@ namespace WinFormsUI
         }
         private void Design()
         {
-            btn_AskQuestion.Text = "Sonraki soru-->";
+            btn_Start_Test.Text = "Sonraki soru-->";
             lbl_QuestionText.Visible = true;
             btn_A.Visible = true;
             btn_B.Visible = true;
@@ -140,11 +140,32 @@ namespace WinFormsUI
 
         private void frmSubjectBasedTest_Load(object sender, EventArgs e)
         {
-            int i = 0;
             foreach (var item in questionManager.GetAllQuestionWithUnitId(LeastKnownUnitId).Data)
             {
                 questionId.Add(item.Id);
             }
+        }
+
+        private void btn_Start_Test_MouseHover(object sender, EventArgs e)
+        {
+            btn_Start_Test.ForeColor = Color.Green;
+        }
+
+        private void btn_Start_Test_MouseLeave(object sender, EventArgs e)
+        {
+            btn_Start_Test.ForeColor = Color.Black;
+        }
+
+        private void pcr_Exit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void pcr_Back_Click(object sender, EventArgs e)
+        {
+            ExamResult examResult = new ExamResult();
+            examResult.Show();
+            this.Hide();
         }
     }
 }

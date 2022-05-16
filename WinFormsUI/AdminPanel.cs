@@ -22,7 +22,7 @@ namespace WinFormsUI
         QuestionToAddManager questionToAdd = new QuestionToAddManager(new EFQuestionToAddDal());
         QuestionManager questionManager = new QuestionManager(new EfQuestionDal());
         TestingApplicationContext testingApplicationContext = new TestingApplicationContext();
-        private void btn_Register_Click(object sender, EventArgs e)
+        private void btn_Save_Click(object sender, EventArgs e)
         {
             if (txt_Question.Text == "")
             {
@@ -59,15 +59,16 @@ namespace WinFormsUI
             txt_TrueSection.Clear();
             txt_Unit.Clear();
             txt_Image.Clear();
+            pcr_Question_Image.ImageLocation = "";
 
         }
 
         private void AdminPanel_Load(object sender, EventArgs e)
         {
             dataGridView();
-           
         }
-        void dataGridView() { 
+        void dataGridView() 
+        { 
             dataGridView1.DataSource = testingApplicationContext.QuestionToAdds.ToList();
         }
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -81,6 +82,9 @@ namespace WinFormsUI
             txt_TrueSection.Text = dataGridView1.Rows[secilen].Cells[7].Value.ToString();
             txt_Unit.Text = dataGridView1.Rows[secilen].Cells[2].Value.ToString();
             txt_Image.Text = dataGridView1.Rows[secilen].Cells[8].Value.ToString();
+
+            pcr_Question_Image.ImageLocation = txt_Image.Text;
+
         }
 
         private void btn_Delete_Click(object sender, EventArgs e)
@@ -96,6 +100,38 @@ namespace WinFormsUI
                 clear();
                 dataGridView();
             }
+        }
+
+        private void pcr_Exit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void pcr_Back_Click(object sender, EventArgs e)
+        {
+            Login login = new Login();
+            login.Show();
+            this.Hide();
+        }
+
+        private void btn_Register_MouseHover(object sender, EventArgs e)
+        {
+            btn_Save.ForeColor = Color.Green;
+        }
+
+        private void btn_Register_MouseLeave(object sender, EventArgs e)
+        {
+            btn_Save.ForeColor = Color.Black;
+        }
+
+        private void btn_Delete_MouseHover(object sender, EventArgs e)
+        {
+            btn_Delete.ForeColor = Color.Red;
+        }
+
+        private void btn_Delete_MouseLeave(object sender, EventArgs e)
+        {
+            btn_Delete.ForeColor = Color.Black;
         }
     }
 }

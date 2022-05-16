@@ -162,19 +162,32 @@ namespace WinFormsUI
         private void Design()
         {
             btn_AskQuestion.Text = "Sonraki soru-->";
+
             lbl_QuestionText.Visible = true;
+
             btn_A.Visible = true;
             btn_B.Visible = true;
             btn_C.Visible = true;
             btn_D.Visible = true;
+
+
             btn_A.Enabled = true;
             btn_B.Enabled = true;
             btn_C.Enabled = true;
             btn_D.Enabled = true;
+
+            lbl_A.Visible = true;
+            lbl_B.Visible = true;
+            lbl_C.Visible = true;
+            lbl_D.Visible = true;
+
+
             lbl_Minute.Visible = true;
             lbl_Second.Visible = true;
+
             label1.Visible = true;
             label3.Visible = true;
+
             btn_A.BackColor = Color.White;
             btn_B.BackColor = Color.White;
             btn_C.BackColor = Color.White;
@@ -494,6 +507,18 @@ namespace WinFormsUI
         private void lbl_QuestionText_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void pcr_Back_Click(object sender, EventArgs e)
+        {
+            Login login = new Login();
+            login.Show();
+            this.Hide();
+        }
+
+        private void pcr_Exit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

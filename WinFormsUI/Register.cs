@@ -100,5 +100,27 @@ namespace WinFormsUI
                 
             });
         }
+
+        private void pcr_Exit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void pcr_Back_Click(object sender, EventArgs e)
+        {
+            Login login = new Login();
+            login.Show();
+            this.Hide();
+        }
+
+        private void btn_Register_MouseHover(object sender, EventArgs e)
+        {
+            btn_Register.ForeColor = Color.Yellow;
+        }
+
+        private void btn_Register_MouseLeave(object sender, EventArgs e)
+        {
+            btn_Register.ForeColor = Color.Black;
+        }
     }
 }

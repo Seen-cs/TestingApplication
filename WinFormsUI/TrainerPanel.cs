@@ -27,7 +27,7 @@ namespace WinFormsUI
             txt_Image.Text = openFileDialog1.FileName;
         }
 
-        private void btn_Register_Click(object sender, EventArgs e)
+        private void btn_Save_Click(object sender, EventArgs e)
         {
             QuestionToAdd question = new QuestionToAdd();
             question.UnitId = 0;
@@ -118,6 +118,8 @@ namespace WinFormsUI
                 txt_B.Clear();
                 txt_C.Clear();
                 txt_D.Clear();
+                cmb_Unit.Text = "";
+                picture_Image.ImageLocation = "";
             }
             void check()
             {
@@ -158,6 +160,28 @@ namespace WinFormsUI
             check_B.Checked = false;
             check_C.Checked = false;
             check_A.Checked = false;
+        }
+
+        private void btn_Save_MouseHover(object sender, EventArgs e)
+        {
+            btn_Save.ForeColor = Color.Green;
+        }
+
+        private void btn_Save_MouseLeave(object sender, EventArgs e)
+        {
+            btn_Save.ForeColor = Color.Black;
+        }
+
+        private void pcr_Back_Click(object sender, EventArgs e)
+        {
+            Login login = new Login();
+            login.Show();
+            this.Hide();
+        }
+
+        private void pcr_Exit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
