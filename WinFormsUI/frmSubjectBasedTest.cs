@@ -163,7 +163,7 @@ namespace WinFormsUI
 
         private void pcr_Back_Click(object sender, EventArgs e)
         {
-            ExamResult examResult = new ExamResult();
+            frmExamResult examResult = new frmExamResult();
             examResult.Show();
             this.Hide();
         }

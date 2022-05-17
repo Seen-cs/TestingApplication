@@ -12,19 +12,9 @@ namespace DataAccess
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-0AQV4FJ;Database=TestingApplication;Trusted_Connection=true");
+            optionsBuilder.UseSqlServer(@"Server=DESKTOP-TOT4JFM;Database=TestingApplication;Trusted_Connection=true");
             
         }
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<Admin>().HasNoKey();
-        //    modelBuilder.Entity<Trainer>().HasNoKey();
-        //    modelBuilder.Entity<Student>().HasNoKey();
-        //    modelBuilder.Entity<SectionA>().HasNoKey();
-        //    modelBuilder.Entity<SectionB>().HasNoKey();
-
-        //}
-
 
         public DbSet<Question> Questions { get; set; }
         public DbSet<User> Users { get; set; }
